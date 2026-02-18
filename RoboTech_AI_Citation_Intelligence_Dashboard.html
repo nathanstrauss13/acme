@@ -1,0 +1,925 @@
+<!-- RoboTech AI Citation Intelligence Dashboard - Squarespace Embed Version -->
+<div id="robotech-aeo-dashboard">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap');
+
+        /* Force Squarespace page background and layout */
+        body { background-color: #000000 !important; }
+        .page-section { padding-top: 0 !important; padding-bottom: 0 !important; }
+        .content-wrapper { padding-top: 0 !important; }
+        .sqs-block-content, .sqs-block-code, .sqs-code-container { text-align: left !important; }
+        #robotech-aeo-dashboard, #robotech-aeo-dashboard * { pointer-events: auto !important; }
+        #robotech-aeo-dashboard .nav-bubble-label { pointer-events: none !important; }
+
+        :root {
+            --bg-body: #000000;
+            --bg-card: #141414;
+            --bg-card-soft: #1a1a1a;
+            --bg-card-hover: #222222;
+            --border: #2a2a2a;
+            --border-light: #333333;
+            --text-primary: #ffffff;
+            --text-secondary: #a0a0a0;
+            --text-muted: #666666;
+            --accent-primary: #0077CC;
+            --accent-secondary: #005FA3;
+            --status-good: #4CAF7C;
+            --status-warn: #C4A77D;
+            --status-risk: #E57373;
+            --status-info: #4DD4E4;
+            --accent-cyan: #4DD4E4;
+            --accent-green: #4CAF7C;
+            --accent-coral: #E57373;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        #robotech-aeo-dashboard { font-family: 'Poppins', sans-serif; background: var(--bg-body); color: var(--text-primary); line-height: 1.6; font-weight: 400; }
+        .container { max-width: 1400px; margin: 0 auto; padding: 2rem; }
+        
+        .brand-title { font-size: 2rem; font-weight: 300; letter-spacing: 0.1em; margin-bottom: 0; }
+        .brand-title span { color: var(--accent-primary); }
+        .subtitle { font-size: 1rem; font-weight: 300; color: var(--text-secondary); letter-spacing: 0.05em; }
+        
+        .metadata-bar { display: flex; justify-content: center; gap: 2rem; flex-wrap: wrap; margin: 1.5rem 0; padding: 1rem; background: var(--bg-card); border-radius: 8px; border: 1px solid var(--border); }
+        .metadata-item { text-align: center; }
+        .metadata-value { font-size: 1.5rem; font-weight: 300; color: var(--accent-primary); }
+        .metadata-label { font-size: 0.75rem; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.1em; }
+        
+        .section-title { font-size: 1.6rem; font-weight: 300; letter-spacing: 0.04em; margin-bottom: 1.5rem; padding-bottom: 0.5rem; border-bottom: 1px solid var(--border); }
+        section { margin-top: 3rem; }
+        section:first-of-type { margin-top: 0; }
+        
+        .hero-grid { display: grid; grid-template-columns: 220px 1fr; gap: 2rem; align-items: start; margin-bottom: 2rem; }
+        
+        /* Concentric Score Ring */
+        .score-ring-container { display: flex; flex-direction: column; align-items: center; background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; padding: 1.5rem; }
+        .score-ring { position: relative; width: 180px; height: 180px; }
+        .score-ring-svg { width: 100%; height: 100%; transform: rotate(-90deg); }
+        .ring-track { fill: none; stroke: var(--bg-card-soft); stroke-width: 6; }
+        .ring-fill { fill: none; stroke-width: 6; stroke-linecap: round; transition: stroke-dashoffset 1s ease-out; }
+        .ring-fill.branded { stroke: var(--accent-cyan); }
+        .ring-fill.top3 { stroke: var(--accent-green); }
+        .ring-fill.featured { stroke: var(--accent-coral); }
+        .score-ring-value { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center; }
+        .score-ring-number { font-size: 2.5rem; font-weight: 300; }
+        .score-ring-label { font-size: 0.7rem; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.1em; }
+        .ring-legend { display: flex; flex-direction: column; gap: 0.5rem; margin-top: 1.25rem; width: 100%; }
+        .ring-legend-row { display: flex; justify-content: space-between; align-items: center; font-size: 0.75rem; }
+        .ring-legend-left { display: flex; align-items: center; gap: 0.5rem; }
+        .ring-legend-dot { width: 10px; height: 10px; border-radius: 50%; }
+        .ring-legend-dot.cyan { background: var(--accent-cyan); }
+        .ring-legend-dot.green { background: var(--accent-green); }
+        .ring-legend-dot.coral { background: var(--accent-coral); }
+        .ring-legend-label { color: var(--text-secondary); }
+        .ring-legend-value { font-weight: 400; color: var(--text-primary); }
+        
+        .kpi-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; }
+        .kpi-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; padding: 1.25rem; cursor: pointer; transition: all 0.3s ease; }
+        .kpi-card:hover { border-color: var(--accent-primary); box-shadow: 0 2px 12px rgba(0,119,204,0.15); }
+        .kpi-value { font-size: 1.8rem; font-weight: 300; color: var(--accent-primary); line-height: 1; }
+        .kpi-label { font-size: 0.8rem; color: var(--text-secondary); margin-top: 0.5rem; }
+        .kpi-expand { display: none; margin-top: 1rem; padding-top: 1rem; border-top: 1px solid var(--border); font-size: 0.85rem; color: var(--text-secondary); }
+        .kpi-card.expanded .kpi-expand { display: block; }
+        
+        .exec-summary { background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; padding: 1.5rem; margin: 2rem 0; }
+        .exec-summary h3 { font-size: 1rem; font-weight: 500; color: var(--accent-primary); margin-bottom: 1rem; }
+        .exec-summary p { color: var(--text-secondary); font-size: 0.95rem; }
+        
+        .section-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; flex-wrap: wrap; gap: 1rem; }
+        .section-header .section-title { margin-bottom: 0; padding-bottom: 0; border-bottom: none; }
+        
+        /* Platform Filter Buttons */
+        .platform-filter-btns { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+        .platform-btn { background: var(--bg-card); border: 1px solid var(--border); border-radius: 20px; padding: 0.4rem 0.9rem; font-family: inherit; font-size: 0.75rem; font-weight: 400; color: var(--text-secondary); cursor: pointer; transition: all 0.2s ease; }
+        .platform-btn:hover { border-color: var(--text-muted); color: var(--text-primary); }
+        .platform-btn.active { background: var(--accent-primary); border-color: var(--accent-primary); color: white; }
+        
+        .competitive-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; }
+        .chart-container { background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; padding: 1.5rem; }
+        .chart-title { font-size: 1rem; font-weight: 500; margin-bottom: 1rem; }
+        .bar-chart { display: flex; flex-direction: column; gap: 0.5rem; }
+        .bar-row { display: grid; grid-template-columns: 120px 1fr 60px; gap: 0.75rem; align-items: center; }
+        .bar-label { font-size: 0.8rem; text-align: right; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: var(--text-secondary); }
+        .bar-track { height: 20px; background: var(--bg-card-soft); border-radius: 4px; overflow: hidden; }
+        .bar-fill { height: 100%; background: #666; border-radius: 4px; }
+        .bar-fill.highlight { background: var(--accent-primary); }
+        .bar-value { font-size: 0.8rem; color: var(--text-secondary); }
+        .methodology-note { font-size: 0.75rem; color: var(--text-muted); font-style: italic; margin-top: 1rem; padding-top: 1rem; border-top: 1px solid var(--border); }
+        
+        .category-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1rem; }
+        .category-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; padding: 1rem; transition: all 0.3s ease; }
+        .category-card:hover { border-color: var(--border-light); }
+        .category-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem; }
+        .category-name { font-size: 0.95rem; font-weight: 500; }
+        .status-chip { font-size: 0.65rem; padding: 0.2rem 0.5rem; border-radius: 12px; font-weight: 500; }
+        .status-chip.leading { background: rgba(76,175,124,0.2); color: var(--status-good); }
+        .status-chip.competitive { background: rgba(196,167,125,0.2); color: var(--status-warn); }
+        .status-chip.developing { background: rgba(77,212,228,0.2); color: var(--status-info); }
+        .status-chip.opportunity { background: rgba(229,115,115,0.2); color: var(--status-risk); }
+        .category-sample { font-size: 0.75rem; color: var(--text-muted); font-style: italic; margin-bottom: 0.75rem; }
+        .category-stats { display: flex; gap: 1rem; margin-bottom: 0.75rem; }
+        .category-stat { text-align: center; }
+        .category-stat-value { font-size: 1.25rem; font-weight: 300; color: var(--accent-primary); }
+        .category-stat-label { font-size: 0.65rem; color: var(--text-muted); text-transform: uppercase; }
+        .category-progress { }
+        .progress-track { height: 4px; background: var(--bg-card-soft); border-radius: 2px; overflow: hidden; }
+        .progress-fill { height: 100%; background: var(--accent-primary); border-radius: 2px; }
+        
+        .sort-controls { display: flex; gap: 0.5rem; }
+        .sort-btn { background: var(--bg-card); border: 1px solid var(--border); border-radius: 4px; padding: 0.4rem 0.8rem; font-family: inherit; font-size: 0.75rem; color: var(--text-secondary); cursor: pointer; transition: all 0.2s ease; }
+        .sort-btn:hover { border-color: var(--text-muted); }
+        .sort-btn.active { background: var(--accent-primary); border-color: var(--accent-primary); color: white; }
+        
+        .platform-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 1rem; }
+        .platform-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; padding: 1rem; text-align: center; transition: all 0.3s ease; }
+        .platform-card:hover { border-color: var(--border-light); }
+        .platform-card.best { border-color: var(--status-good); background: rgba(76,175,124,0.05); }
+        .platform-name { font-size: 0.85rem; font-weight: 500; margin-bottom: 0.75rem; }
+        .platform-mention { font-size: 2rem; font-weight: 300; color: var(--accent-primary); }
+        .platform-label { font-size: 0.7rem; color: var(--text-secondary); }
+        .platform-details { margin-top: 0.75rem; padding-top: 0.75rem; border-top: 1px solid var(--border); font-size: 0.75rem; color: var(--text-secondary); }
+        .rag-indicator { display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: 0.25rem; }
+        .rag-indicator.yes { background: var(--status-good); }
+        .rag-indicator.partial { background: var(--status-warn); }
+        
+        .position-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; }
+        .position-chart { background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; padding: 1.5rem; }
+        .position-bar { display: flex; height: 40px; border-radius: 4px; overflow: hidden; margin-bottom: 1rem; }
+        .position-segment { display: flex; align-items: center; justify-content: center; font-size: 0.75rem; font-weight: 500; }
+        .position-segment.pos-1 { background: #4caf50; color: #fff; }
+        .position-segment.pos-2 { background: #8bc34a; color: #fff; }
+        .position-segment.pos-3 { background: #ffc107; color: #000; }
+        .position-segment.pos-4 { background: #ff9800; color: #fff; }
+        .position-legend { display: flex; gap: 1rem; flex-wrap: wrap; }
+        .position-legend-item { display: flex; align-items: center; gap: 0.4rem; font-size: 0.75rem; color: var(--text-secondary); }
+        .position-dot { width: 12px; height: 12px; border-radius: 3px; }
+        
+        .insight-box { background: var(--bg-card); border-left: 3px solid var(--accent-cyan); padding: 1rem; margin-top: 1rem; font-size: 0.85rem; color: var(--text-secondary); }
+        
+        /* Content Conversion - Horizontal on Desktop */
+        .content-authority-intro { background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; padding: 1.25rem; margin-bottom: 1.5rem; }
+        .content-authority-intro p { font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 0.75rem; }
+        .content-authority-intro p:last-child { margin-bottom: 0; }
+        
+        .conversion-horizontal { display: flex; gap: 1rem; flex-wrap: wrap; }
+        .conversion-item { flex: 1; min-width: 100px; max-width: 120px; text-align: center; background: var(--bg-card-soft); border-radius: 8px; padding: 1rem 0.5rem; transition: all 0.2s ease; }
+        .conversion-item:hover { background: var(--bg-card-hover); }
+        .conversion-item.highlight { border: 1px solid var(--accent-primary); background: rgba(0,119,204,0.1); }
+        .conversion-brand { font-size: 0.7rem; font-weight: 500; margin-bottom: 0.5rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: var(--text-secondary); }
+        .conversion-item.highlight .conversion-brand { color: var(--accent-primary); }
+        .conversion-rate-value { font-size: 1.5rem; font-weight: 300; line-height: 1; }
+        .conversion-rate-value.high { color: var(--status-good); }
+        .conversion-rate-value.medium { color: var(--status-warn); }
+        .conversion-rate-value.low { color: var(--status-risk); }
+        .conversion-detail { font-size: 0.65rem; color: var(--text-muted); margin-top: 0.25rem; }
+        
+        @media (max-width: 900px) {
+            .conversion-horizontal { flex-direction: column; }
+            .conversion-item { max-width: none; }
+        }
+        
+        .tab-container { background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; overflow: hidden; }
+        .tab-header { display: flex; border-bottom: 1px solid var(--border); flex-wrap: wrap; }
+        .toggle-btn { flex: 1; padding: 1rem; background: transparent; border: none; color: var(--text-secondary); cursor: pointer; font-family: inherit; font-size: 0.85rem; min-width: 120px; }
+        .toggle-btn.active { background: var(--bg-card-soft); color: var(--accent-primary); border-bottom: 2px solid var(--accent-primary); }
+        .tab-content { display: none; padding: 1.5rem; }
+        .tab-content.active { display: block; }
+        .media-list { display: flex; flex-direction: column; gap: 0.75rem; }
+        .media-row { display: grid; grid-template-columns: 180px 1fr 100px; gap: 1rem; align-items: center; }
+        .media-domain { font-size: 0.8rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: var(--text-primary); }
+        .media-bar-container { position: relative; height: 20px; }
+        .media-bar-track { position: absolute; top: 0; left: 0; height: 100%; background: var(--bg-card-soft); border-radius: 4px; }
+        .media-bar-fill { position: absolute; top: 0; left: 0; height: 100%; border-radius: 4px; }
+        .media-bar-fill.high { background: var(--status-good); opacity: 0.7; }
+        .media-bar-fill.medium { background: var(--status-warn); opacity: 0.7; }
+        .media-bar-fill.low { background: var(--status-risk); opacity: 0.7; }
+        .media-pct { font-size: 0.75rem; color: var(--text-secondary); text-align: right; line-height: 1.3; min-width: 80px; }
+        .media-type-tag { display: inline-block; font-size: 0.6rem; padding: 0.15rem 0.4rem; border-radius: 3px; margin-left: 0.5rem; background: var(--bg-card-soft); color: var(--text-muted); }
+        
+        .rec-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.5rem; }
+        .rec-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; padding: 1.5rem; }
+        .rec-header { font-size: 1rem; font-weight: 500; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem; }
+        .rec-header::before { content: ''; width: 4px; height: 20px; background: var(--accent-primary); border-radius: 2px; }
+        .rec-section { margin-bottom: 0.75rem; }
+        .rec-label { font-size: 0.7rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.25rem; }
+        .rec-content { font-size: 0.85rem; color: var(--text-secondary); }
+        
+        .filter-controls { display: flex; flex-wrap: wrap; gap: 1rem; margin-bottom: 1rem; padding: 1rem; background: var(--bg-card); border-radius: 8px; border: 1px solid var(--border); }
+        .filter-group { display: flex; flex-direction: column; gap: 0.25rem; }
+        .filter-label { font-size: 0.7rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; }
+        .filter-select { padding: 0.5rem; border: 1px solid var(--border); border-radius: 4px; font-family: inherit; font-size: 0.85rem; min-width: 140px; background: var(--bg-card-soft); color: var(--text-primary); }
+        .filter-select:focus { outline: none; border-color: var(--accent-primary); }
+        
+        .results-counter { font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 1rem; }
+        .query-table-container { overflow-x: auto; max-height: 600px; overflow-y: auto; border: 1px solid var(--border); border-radius: 8px; }
+        .query-table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
+        .query-table th, .query-table td { padding: 0.75rem; text-align: left; border-bottom: 1px solid var(--border); }
+        .query-table th { background: var(--bg-card); font-weight: 500; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-muted); position: sticky; top: 0; cursor: pointer; }
+        .query-table th:hover { background: var(--bg-card-soft); }
+        .query-table td { color: var(--text-secondary); }
+        .query-table tbody tr:hover td { background: var(--bg-card-soft); }
+        .query-text { max-width: 300px; color: var(--text-primary); }
+        .mention-yes { color: var(--status-good); font-weight: 500; }
+        .mention-no { color: var(--status-risk); }
+        
+        .nav-bubbles { position: fixed; right: 1.5rem; top: 50%; transform: translateY(-50%); display: flex; flex-direction: column; gap: 0.5rem; z-index: 1000; }
+        .nav-bubble { width: 12px; height: 12px; border-radius: 50%; background: var(--border); position: relative; transition: all 0.2s ease; }
+        .nav-bubble:hover, .nav-bubble.active { background: var(--accent-primary); transform: scale(1.3); }
+        .nav-bubble-label { position: absolute; right: 20px; top: 50%; transform: translateY(-50%); background: var(--text-primary); color: var(--bg-body); padding: 0.3rem 0.6rem; border-radius: 4px; font-size: 0.7rem; white-space: nowrap; opacity: 0; pointer-events: none; transition: opacity 0.2s ease; }
+        .nav-bubble:hover .nav-bubble-label { opacity: 1; }
+        
+        .methodology { background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; padding: 2rem; margin-top: 2rem; }
+        .methodology h3 { font-size: 1.1rem; font-weight: 500; margin-bottom: 1rem; }
+        .methodology-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 2rem; }
+        .methodology-section { font-size: 0.85rem; }
+        .methodology-section h4 { font-weight: 500; margin-bottom: 0.5rem; color: var(--accent-primary); }
+        .methodology-section ul { margin-left: 1.2rem; color: var(--text-secondary); }
+        .methodology-section li { margin-bottom: 0.3rem; }
+        .methodology-section p { color: var(--text-secondary); }
+        
+        @media (max-width: 1200px) { .competitive-grid, .position-grid { grid-template-columns: 1fr; } .platform-grid { grid-template-columns: repeat(3, 1fr); } }
+        @media (max-width: 900px) { .hero-grid { grid-template-columns: 1fr; } .kpi-grid { grid-template-columns: repeat(2, 1fr); } .platform-grid { grid-template-columns: repeat(2, 1fr); } .rec-grid { grid-template-columns: 1fr; } .methodology-grid { grid-template-columns: 1fr; } }
+        @media (max-width: 600px) { .kpi-grid { grid-template-columns: 1fr; } .platform-grid { grid-template-columns: 1fr; } .section-header { flex-direction: column; align-items: flex-start; } .platform-filter-btns { width: 100%; } }
+        @media print { .nav-bubbles { display: none; } }
+    </style>
+    <nav class="nav-bubbles">
+        <a href="#s-overview" class="nav-bubble" data-section="s-overview"><span class="nav-bubble-label">Overview</span></a>
+        <a href="#s-competitive" class="nav-bubble" data-section="s-competitive"><span class="nav-bubble-label">Competitive</span></a>
+        <a href="#s-categories" class="nav-bubble" data-section="s-categories"><span class="nav-bubble-label">Categories</span></a>
+        <a href="#s-platforms" class="nav-bubble" data-section="s-platforms"><span class="nav-bubble-label">Platforms</span></a>
+        <a href="#s-position" class="nav-bubble" data-section="s-position"><span class="nav-bubble-label">Position</span></a>
+        <a href="#s-content-authority" class="nav-bubble" data-section="s-content-authority"><span class="nav-bubble-label">Content</span></a>
+        <a href="#s-media" class="nav-bubble" data-section="s-media"><span class="nav-bubble-label">Media</span></a>
+        <a href="#s-queries" class="nav-bubble" data-section="s-queries"><span class="nav-bubble-label">Queries</span></a>
+        <a href="#s-methodology" class="nav-bubble" data-section="s-methodology"><span class="nav-bubble-label">Methodology</span></a>
+    </nav>
+
+    <div class="container">
+        <section id="s-overview">
+            <!-- Inline Header + Metadata -->
+            <div style="text-align:center;margin-bottom:1.5rem;">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" style="height:40px;width:auto;margin-bottom:0.5rem;"><rect x="25" y="30" width="50" height="40" rx="8" fill="#0077CC"/><rect x="35" y="10" width="30" height="25" rx="6" fill="#0077CC"/><circle cx="42" cy="22" r="4" fill="#4DD4E4"/><circle cx="58" cy="22" r="4" fill="#4DD4E4"/><rect x="45" y="0" width="10" height="14" rx="3" fill="#0077CC"/><circle cx="50" cy="0" r="4" fill="#4DD4E4"/><rect x="10" y="40" width="18" height="8" rx="4" fill="#0077CC"/><rect x="72" y="40" width="18" height="8" rx="4" fill="#0077CC"/><rect x="30" y="68" width="12" height="20" rx="4" fill="#0077CC"/><rect x="58" y="68" width="12" height="20" rx="4" fill="#0077CC"/><rect x="38" y="42" width="24" height="6" rx="3" fill="#4DD4E4"/></svg>
+                <h1 class="brand-title"><span>RoboTech</span> AI Citation Intelligence</h1>
+            </div>
+            <div class="metadata-bar">
+                <div class="metadata-item"><div class="metadata-value">Jan 2026</div><div class="metadata-label">Date</div></div>
+                <div class="metadata-item"><div class="metadata-value">50</div><div class="metadata-label">Queries</div></div>
+                <div class="metadata-item"><div class="metadata-value">5</div><div class="metadata-label">Platforms</div></div>
+                <div class="metadata-item"><div class="metadata-value">250</div><div class="metadata-label">Total Tests</div></div>
+                <div class="metadata-item"><div class="metadata-value">15</div><div class="metadata-label">Categories</div></div>
+                <div class="metadata-item"><div class="metadata-value">1,911</div><div class="metadata-label">Citations</div></div>
+            </div>
+            <div class="hero-grid">
+                <!-- Concentric Score Ring -->
+                <div class="score-ring-container">
+                    <div class="score-ring">
+                        <svg viewBox="0 0 120 120" class="score-ring-svg">
+                            <!-- Outer Ring: Mention (cyan) - r=54 -->
+                            <circle class="ring-track" cx="60" cy="60" r="54" />
+                            <circle class="ring-fill branded" cx="60" cy="60" r="54" id="ring-mention" data-percent="51.2" />
+                            
+                            <!-- Middle Ring: Top-3 (green) - r=42 -->
+                            <circle class="ring-track" cx="60" cy="60" r="42" />
+                            <circle class="ring-fill top3" cx="60" cy="60" r="42" id="ring-top3" data-percent="84.4" />
+                            
+                            <!-- Inner Ring: Featured (coral) - r=30 -->
+                            <circle class="ring-track" cx="60" cy="60" r="30" />
+                            <circle class="ring-fill featured" cx="60" cy="60" r="30" id="ring-featured" data-percent="22.8" />
+                        </svg>
+                        <div class="score-ring-value">
+                            <div class="score-ring-number">50</div>
+                            <div class="score-ring-label">AEO<br>Score</div>
+                        </div>
+                    </div>
+                    <div class="ring-legend">
+                        <div class="ring-legend-row">
+                            <div class="ring-legend-left">
+                                <span class="ring-legend-dot cyan"></span>
+                                <span class="ring-legend-label">Mention</span>
+                            </div>
+                            <span class="ring-legend-value">48%</span>
+                        </div>
+                        <div class="ring-legend-row">
+                            <div class="ring-legend-left">
+                                <span class="ring-legend-dot green"></span>
+                                <span class="ring-legend-label">Top-3</span>
+                            </div>
+                            <span class="ring-legend-value">88.3%</span>
+                        </div>
+                        <div class="ring-legend-row">
+                            <div class="ring-legend-left">
+                                <span class="ring-legend-dot coral"></span>
+                                <span class="ring-legend-label">Featured</span>
+                            </div>
+                            <span class="ring-legend-value">22.8%</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="kpi-grid">
+                    <div class="kpi-card" onclick="toggleKpi(this)">
+                        <div class="kpi-value">51.2%</div>
+                        <div class="kpi-label">Mention Rate</div>
+                        <div class="kpi-expand">128 of 250 tests included RoboTech in the response.</div>
+                    </div>
+                    <div class="kpi-card" onclick="toggleKpi(this)">
+                        <div class="kpi-value">22.8%</div>
+                        <div class="kpi-label">Featured Rate</div>
+                        <div class="kpi-expand">57 of 250 tests presented RoboTech as THE top recommendation.</div>
+                    </div>
+                    <div class="kpi-card" onclick="toggleKpi(this)">
+                        <div class="kpi-value">84.4%</div>
+                        <div class="kpi-label">Top-3 Position</div>
+                        <div class="kpi-expand">108 of 128 mentions placed RoboTech in positions 1-3.</div>
+                    </div>
+                    <div class="kpi-card" onclick="toggleKpi(this)">
+                        <div class="kpi-value">Industrial Robots</div>
+                        <div class="kpi-label">Strongest Category</div>
+                        <div class="kpi-expand">Industrial Robots: 86.7% mention rate, 53.3% featured rate.</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="exec-summary">
+                <h3>Executive Summary</h3>
+                <p>RoboTech Industries demonstrates strong AI visibility in core robotics categories with a 51.2% overall mention rate (128 of 250 unbranded queries mentioned the brand). Category performance varies significantly: Industrial Robots (70.0% mention) and Collaborative Robots (70.0% mention) represent clear strengths, while Autonomous Vehicles (0.0% visibility) and Grippers & End Effectors (26.7% visibility) indicate category-specific opportunities. Content conversion rate of 56.5% leads the competitive field, indicating strong recommendation quality when cited. ChatGPT shows highest mention rate among platforms tested.</p>
+            </div>
+        </section>
+
+        <section id="s-competitive">
+            <div class="section-header">
+                <h2 class="section-title">Competitive Position</h2>
+                <div class="platform-filter-btns" id="competitive-filter-btns">
+                    <button class="platform-btn active" data-llm="all" onclick="filterCompetitiveByLLM('all', this)">All Platforms</button>
+                    <button class="platform-btn" data-llm="chatgpt" onclick="filterCompetitiveByLLM('chatgpt', this)">ChatGPT</button>
+                    <button class="platform-btn" data-llm="claude" onclick="filterCompetitiveByLLM('claude', this)">Claude</button>
+                    <button class="platform-btn" data-llm="perplexity" onclick="filterCompetitiveByLLM('perplexity', this)">Perplexity</button>
+                    <button class="platform-btn" data-llm="gemini" onclick="filterCompetitiveByLLM('gemini', this)">Gemini</button>
+                    <button class="platform-btn" data-llm="meta_llama" onclick="filterCompetitiveByLLM('meta_llama', this)">Meta Llama</button>
+                </div>
+            </div>
+            <div class="competitive-grid">
+                <div class="chart-container">
+                    <div class="chart-title">Mention Count Ranking</div>
+                    <div class="bar-chart" id="mention-chart"></div>
+                    <p class="methodology-note">Number of responses (out of 250) where the brand was mentioned.</p>
+                </div>
+                <div class="chart-container">
+                    <div class="chart-title">Featured Count Ranking</div>
+                    <div class="bar-chart" id="featured-chart"></div>
+                    <p class="methodology-note">Number of responses (out of 250) where the brand was featured as the #1 recommendation.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="s-categories">
+            <div class="section-header">
+                <h2 class="section-title">Category Performance</h2>
+                <div style="display: flex; gap: 1rem; align-items: center; flex-wrap: wrap;">
+                    <div class="platform-filter-btns" id="category-filter-btns">
+                        <button class="platform-btn active" data-llm="all" onclick="filterCategoriesByLLM('all', this)">All Platforms</button>
+                        <button class="platform-btn" data-llm="chatgpt" onclick="filterCategoriesByLLM('chatgpt', this)">ChatGPT</button>
+                        <button class="platform-btn" data-llm="claude" onclick="filterCategoriesByLLM('claude', this)">Claude</button>
+                        <button class="platform-btn" data-llm="perplexity" onclick="filterCategoriesByLLM('perplexity', this)">Perplexity</button>
+                        <button class="platform-btn" data-llm="gemini" onclick="filterCategoriesByLLM('gemini', this)">Gemini</button>
+                        <button class="platform-btn" data-llm="meta_llama" onclick="filterCategoriesByLLM('meta_llama', this)">Meta Llama</button>
+                    </div>
+                    <div class="sort-controls">
+                        <button class="sort-btn active" onclick="sortCategories('mention', this)">By Mention Rate</button>
+                        <button class="sort-btn" onclick="sortCategories('featured', this)">By Featured Rate</button>
+                        <button class="sort-btn" onclick="sortCategories('alpha', this)">Alphabetical</button>
+                    </div>
+                </div>
+            </div>
+            <div class="category-grid" id="category-grid"></div>
+        </section>
+
+        <section id="s-platforms">
+            <h2 class="section-title">Platform Comparison</h2>
+            <div class="platform-grid" id="platform-grid"></div>
+            <div class="insight-box" style="margin-top: 1.5rem;"><strong>Platform Variance:</strong> Performance varies by 34 percentage points (32% to 66%) between highest and lowest performing platforms.</div>
+        </section>
+
+        <section id="s-position">
+            <div class="section-header">
+                <h2 class="section-title">Position Analysis</h2>
+                <div class="platform-filter-btns" id="position-filter-btns">
+                    <button class="platform-btn active" data-llm="all" onclick="filterPositionByLLM('all', this)">All Platforms</button>
+                    <button class="platform-btn" data-llm="chatgpt" onclick="filterPositionByLLM('chatgpt', this)">ChatGPT</button>
+                    <button class="platform-btn" data-llm="claude" onclick="filterPositionByLLM('claude', this)">Claude</button>
+                    <button class="platform-btn" data-llm="perplexity" onclick="filterPositionByLLM('perplexity', this)">Perplexity</button>
+                    <button class="platform-btn" data-llm="gemini" onclick="filterPositionByLLM('gemini', this)">Gemini</button>
+                    <button class="platform-btn" data-llm="meta_llama" onclick="filterPositionByLLM('meta_llama', this)">Meta Llama</button>
+                </div>
+            </div>
+            <div class="position-grid">
+                <div class="position-chart">
+                    <div class="chart-title">Position Distribution</div>
+                    <p style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 1rem;">When RoboTech is mentioned, where does it appear in the response?</p>
+                    <div class="position-bar" id="position-bar">
+                        <div class="position-segment pos-1" style="flex: 47.5;">47.5%</div>
+                        <div class="position-segment pos-2" style="flex: 25.8;">25.8%</div>
+                        <div class="position-segment pos-3" style="flex: 15.0;">15%</div>
+                        <div class="position-segment pos-4" style="flex: 11.7;">11.7%</div>
+                    </div>
+                    <div class="position-legend">
+                        <div class="position-legend-item"><div class="position-dot" style="background: #4caf50;"></div>1st</div>
+                        <div class="position-legend-item"><div class="position-dot" style="background: #8bc34a;"></div>2nd</div>
+                        <div class="position-legend-item"><div class="position-dot" style="background: #ffc107;"></div>3rd</div>
+                        <div class="position-legend-item"><div class="position-dot" style="background: #ff9800;"></div>4th+</div>
+                    </div>
+                </div>
+                <div class="position-chart">
+                    <div class="chart-title">Conversion Metrics</div>
+                    <p style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 1rem;">Click each metric to see definition.</p>
+                    <div style="display: flex; gap: 2rem;">
+                        <div class="metric-expandable" onclick="toggleMetricDef(this)" style="text-align: center; cursor: pointer;">
+                            <div style="font-size: 2.5rem; font-weight: 300; color: var(--accent-primary);" id="conversion-rate">47.5%</div>
+                            <div style="font-size: 0.8rem; color: var(--text-secondary);">Visibility â†’ Win Rate</div>
+                            <div class="metric-definition" style="display: none; margin-top: 0.75rem; padding: 0.75rem; background: var(--bg-card-soft); border-radius: 6px; font-size: 0.8rem; color: var(--text-secondary); text-align: left;">
+                                <strong>Definition:</strong> Of the 120 responses where RoboTech was mentioned, 57 featured it as the #1 recommendation (47.5%). This measures how often visibility converts to a win.
+                            </div>
+                        </div>
+                        <div class="metric-expandable" onclick="toggleMetricDef(this)" style="text-align: center; cursor: pointer;">
+                            <div style="font-size: 2.5rem; font-weight: 300; color: var(--status-good);" id="top3-rate">88.3%</div>
+                            <div style="font-size: 0.8rem; color: var(--text-secondary);">Top-3 Placement</div>
+                            <div class="metric-definition" style="display: none; margin-top: 0.75rem; padding: 0.75rem; background: var(--bg-card-soft); border-radius: 6px; font-size: 0.8rem; color: var(--text-secondary); text-align: left;">
+                                <strong>Definition:</strong> Of the 120 responses where RoboTech was mentioned, 106 placed it in positions 1, 2, or 3 (88.3%). High top-3 rate indicates consistent prominent placement when visible.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="s-content-authority">
+            <div class="section-header">
+                <h2 class="section-title">Content Authority Analysis</h2>
+            </div>
+            <div class="content-authority-intro">
+                <p><strong>Key Insight:</strong> A citation indicates a source the AI <em>consulted</em>, not necessarily a source that drove the recommendation. When a brand's website is cited but that brand doesn't win, it reveals a gap between brand awareness and content authority.</p>
+                <p><strong>Content Conversion Rate</strong> = When a brand's owned domain is cited in a response, how often is that brand featured as the #1 recommendation?</p>
+            </div>
+            <div class="chart-container">
+                <div class="chart-title">Content Conversion Rate by Brand</div>
+                <p style="font-size: 0.8rem; color: var(--text-secondary); margin-bottom: 1.5rem;">robotech.com (including developers.robotech.com) was cited in 62 of 250 responses. Of those, 35 featured RoboTech as the #1 recommendation = 56.5% conversion.</p>
+                <div class="conversion-horizontal" id="content-conv-chart"></div>
+                <p class="methodology-note">Based on owned domain citations across 250 responses. Brands with fewer than 4 citations excluded for sample size.</p>
+            </div>
+        </section>
+
+        <section id="s-media">
+            <div class="section-header">
+                <h2 class="section-title">Citation Analysis</h2>
+                <div class="platform-filter-btns" id="media-filter-btns">
+                    <button class="platform-btn active" data-llm="all" onclick="filterMediaByLLM('all', this)">All Platforms</button>
+                    <button class="platform-btn" data-llm="chatgpt" onclick="filterMediaByLLM('chatgpt', this)">ChatGPT</button>
+                    <button class="platform-btn" data-llm="claude" onclick="filterMediaByLLM('claude', this)">Claude</button>
+                    <button class="platform-btn" data-llm="perplexity" onclick="filterMediaByLLM('perplexity', this)">Perplexity</button>
+                    <button class="platform-btn" data-llm="gemini" onclick="filterMediaByLLM('gemini', this)">Gemini</button>
+                    <button class="platform-btn" data-llm="meta_llama" onclick="filterMediaByLLM('meta_llama', this)">Meta Llama</button>
+                </div>
+            </div>
+            <div class="tab-container">
+                <div class="tab-header">
+                    <button class="toggle-btn active" onclick="showTab('earned', this)">Earned Media</button>
+                    <button class="toggle-btn" onclick="showTab('reviews', this)">Reviews & Affiliate</button>
+                    <button class="toggle-btn" onclick="showTab('owned', this)">Owned Media</button>
+                    <button class="toggle-btn" onclick="showTab('shopping', this)">Shopping</button>
+                    <button class="toggle-btn" onclick="showTab('other', this)">Other</button>
+                </div>
+                <div id="tab-earned" class="tab-content active">
+                    <p style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 1rem;">Editorial sources cited by AI platforms. Higher RoboTech share indicates stronger presence.</p>
+                    <div class="media-list" id="earned-media-list"></div>
+                </div>
+                <div id="tab-reviews" class="tab-content">
+                    <p style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 1rem;">Review aggregators, affiliate sites, and specialized blogs cited by AI platforms.</p>
+                    <div class="media-list" id="review-media-list"></div>
+                </div>
+                <div id="tab-owned" class="tab-content">
+                    <p style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 1rem;">RoboTech's own websites cited by AI platforms.</p>
+                    <div class="media-list" id="owned-media-list"></div>
+                </div>
+                <div id="tab-shopping" class="tab-content">
+                    <p style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 1rem;">Retail, e-commerce, and specialty sports retailers cited by AI platforms.</p>
+                    <div class="media-list" id="shopping-media-list"></div>
+                </div>
+                <div id="tab-other" class="tab-content">
+                    <p style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 1rem;">Video platforms and reference sites.</p>
+                    <div class="media-list" id="other-media-list"></div>
+                </div>
+            </div>
+        </section>
+
+        <section id="s-queries">
+            <h2 class="section-title">Query Appendix</h2>
+            <div class="filter-controls">
+                <div class="filter-group"><label class="filter-label">Category</label><select class="filter-select" id="filter-category" onchange="filterQueries()"><option value="all">All Categories</option></select></div>
+                <div class="filter-group">
+                    <label class="filter-label">Platform</label>
+                    <div class="platform-filter-btns" id="query-platform-btns" style="margin-top: 0.25rem;">
+                        <button class="platform-btn active" data-platform="all" onclick="filterQueriesByPlatform('all', this)">All</button>
+                        <button class="platform-btn" data-platform="chatgpt" onclick="filterQueriesByPlatform('chatgpt', this)">ChatGPT</button>
+                        <button class="platform-btn" data-platform="claude" onclick="filterQueriesByPlatform('claude', this)">Claude</button>
+                        <button class="platform-btn" data-platform="perplexity" onclick="filterQueriesByPlatform('perplexity', this)">Perplexity</button>
+                        <button class="platform-btn" data-platform="gemini" onclick="filterQueriesByPlatform('gemini', this)">Gemini</button>
+                        <button class="platform-btn" data-platform="meta_llama" onclick="filterQueriesByPlatform('meta_llama', this)">Meta</button>
+                    </div>
+                </div>
+                <div class="filter-group"><label class="filter-label">Mentioned</label><select class="filter-select" id="filter-mentioned" onchange="filterQueries()"><option value="all">All</option><option value="Yes">Yes</option><option value="No">No</option></select></div>
+                <div class="filter-group"><label class="filter-label">Featured</label><select class="filter-select" id="filter-featured" onchange="filterQueries()"><option value="all">All</option><option value="Yes">Yes</option><option value="No">No</option></select></div>
+                <div class="filter-group"><label class="filter-label">Position</label><select class="filter-select" id="filter-position" onchange="filterQueries()"><option value="all">All</option><option value="1st">1st</option><option value="2nd">2nd</option><option value="3rd">3rd</option><option value="4th+">4th+</option><option value="Not Present">Not Present</option></select></div>
+            </div>
+            <div class="results-counter" id="results-counter">Showing 250 of 250 results</div>
+            <div class="query-table-container">
+                <table class="query-table">
+                    <thead><tr><th onclick="sortTable(0)">Query</th><th onclick="sortTable(1)">Category</th><th onclick="sortTable(2)">Platform</th><th onclick="sortTable(3)">Mentioned</th><th onclick="sortTable(4)">Position</th><th onclick="sortTable(5)">Featured</th></tr></thead>
+                    <tbody id="query-tbody"></tbody>
+                </table>
+            </div>
+        </section>
+
+        <section id="s-methodology" class="methodology">
+            <h3>Methodology</h3>
+            <div class="methodology-grid">
+                <div class="methodology-section">
+                    <h4>Study Parameters</h4>
+                    <ul>
+                        <li>50 unique queries across 15 product categories</li>
+                        <li>5 AI platforms: ChatGPT, Claude, Perplexity, Gemini, Meta Llama</li>
+                        <li>250 total tests (50 queries Ã— 5 platforms)</li>
+                        <li>All queries are unbranded (no explicit brand mentions)</li>
+                        <li>RAG/web search enabled on all platforms</li>
+                        <li>Testing conducted February 2026</li>
+                    </ul>
+                </div>
+                <div class="methodology-section">
+                    <h4>Limitations</h4>
+                    <ul>
+                        <li>Point-in-time snapshot â€” AI responses evolve</li>
+                        <li>Query phrasing influences results</li>
+                        <li>Position detection based on response parsing</li>
+                        <li>Content conversion shows correlation, not causation</li>
+                        <li>Sample size varies by category (15-20 tests)</li>
+                        <li>Platform algorithms may have changed since testing</li>
+                        <li>Geographic/personalization factors not controlled</li>
+                    </ul>
+                </div>
+                <div class="methodology-section">
+                    <h4>Metrics Definitions</h4>
+                    <p><strong>Mention Rate:</strong> % of tests where brand appeared in response</p>
+                    <p><strong>Featured Rate:</strong> % of tests where brand was #1 recommendation</p>
+                    <p><strong>Top-3 Rate:</strong> % of mentions in positions 1, 2, or 3</p>
+                    <p><strong>Content Conversion:</strong> When brand's site is cited, % where brand wins</p>
+                </div>
+                <div class="methodology-section">
+                    <h4>AEO Score Calculation</h4>
+                    <p>AEO Score = (Top3Rate Ã— 0.5) + (FeaturedRate Ã— 0.4) + (ConversionRate Ã— 0.1)</p>
+                    <p style="margin-top: 0.5rem;">Rewards Top-3 visibility and content efficiency, with primary emphasis on consistent prominent placement.</p>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        // Query data from CSV analysis
+        const queryData = [{"query": "What are the best industrial robots for manufacturing?", "category": "Industrial Robots", "engine": "chatgpt", "mentioned": "Yes", "featured": "Yes", "position": "1st", "featuredBrand": "RoboTech", "competitors": "Epson Robots|Apptronik|Boston Dynamics|Universal Robots"}, {"query": "What are the best industrial robots for manufacturing?", "category": "Industrial Robots", "engine": "claude", "mentioned": "Yes", "featured": "No", "position": "2nd", "featuredBrand": "Kawasaki Robotics", "competitors": "FANUC|KUKA"}, {"query": "What are the best industrial robots for manufacturing?", "category": "Industrial Robots", "engine": "perplexity", "mentioned": "Yes", "featured": "Yes", "position": "1st", "featuredBrand": "RoboTech", "competitors": "Agility Robotics|Kawasaki Robotics"}, {"query": "What are the best industrial robots for manufacturing?", "category": "Industrial Robots", "engine": "gemini", "mentioned": "Yes", "featured": "No", "position": "3rd", "featuredBrand": "Universal Robots", "competitors": "Figure AI|Staubli|FANUC|Yaskawa|Fetch Robotics"}, {"query": "What are the best industrial robots for manufacturing?", "category": "Industrial Robots", "engine": "meta_llama", "mentioned": "Yes", "featured": "Yes", "position": "1st", "featuredBrand": "RoboTech", "competitors": "Universal Robots|KUKA|Franka Emika|Apptronik"}, {"query": "Which industrial robot brands are most reliable for automotive assembly?", "category": "Industrial Robots", "engine": "chatgpt", "mentioned": "Yes", "featured": "Yes", "position": "1st", "featuredBrand": "RoboTech", "competitors": "ABB Robotics|Locus Robotics|Agility Robotics|Universal Robots"}, {"query": "Which industrial robot brands are most reliable for automotive assembly?", "category": "Industrial Robots", "engine": "claude", "mentioned": "No", "featured": "No", "position": "Not Present", "featuredBrand": "Kawasaki Robotics", "competitors": "Agility Robotics|Omron"}, {"query": "Which industrial robot brands are most reliable for automotive assembly?", "category": "Industrial Robots", "engine": "perplexity", "mentioned": "Yes", "featured": "No", "position": "3rd", "featuredBrand": "Universal Robots", "competitors": "ABB Robotics|Epson Robots"}, {"query": "Which industrial robot brands are most reliable for automotive assembly?", "category": "Industrial Robots", "engine": "gemini", "mentioned": "Yes", "featured": "No", "position": "2nd", "featuredBrand": "ABB Robotics", "competitors": "Staubli|Locus Robotics|Techman Robot|Yaskawa|Agility Robotics"}, {"query": "Which industrial robot brands are most reliable for automotive assembly?", "category": "Industrial Robots", "engine": "meta_llama", "mentioned": "Yes", "featured": "No", "position": "4th+", "featuredBrand": "ABB Robotics", "competitors": "Agility Robotics|Epson Robots|Yaskawa"}, {"query": "What companies make heavy-duty industrial robots?", "category": "Industrial Robots", "engine": "chatgpt", "mentioned": "Yes", "featured": "Yes", "position": "1st", "featuredBrand": "RoboTech", "competitors": "Doosan Robotics|ABB Robotics|Epson Robots"}, {"query": "What companies make heavy-duty industrial robots?", "category": "Industrial Robots", "engine": "claude", "mentioned": "Yes", "featured": "No", "position": "3rd", "featuredBrand": "Boston Dynamics", "competitors": "Kawasaki Robotics|Figure AI"}, {"query": "What companies make heavy-duty industrial robots?", "category": "Industrial Robots", "engine": "perplexity", "mentioned": "No", "featured": "No", "position": "Not Present", "featuredBrand": "Yaskawa", "competitors": "Intuitive Surgical|Franka Emika"}, {"query": "What companies make heavy-duty industrial robots?", "category": "Industrial Robots", "engine": "gemini", "mentioned": "No", "featured": "No", "position": "Not Present", "featuredBrand": "Epson Robots", "competitors": "Staubli|Boston Dynamics"}, {"query": "What companies make heavy-duty industrial robots?", "category": "Industrial Robots", "engine": "meta_llama", "mentioned": "Yes", "featured": "Yes", "position": "1st", "featuredBrand": "RoboTech", "competitors": "Figure AI|Fetch Robotics|Franka Emika|Techman Robot"}, {"query": "Which cobots are best for small business automation?", "category": "Collaborative Robots", "engine": "chatgpt", "mentioned": "Yes", "featured": "No", "position": "4th+", "featuredBrand": "Epson Robots", "competitors": "ABB Robotics|Universal Robots"}, {"query": "Which cobots are best for small business automation?", "category": "Collaborative Robots", "engine": "claude", "mentioned": "Yes", "featured": "Yes", "position": "1st", "featuredBrand": "RoboTech", "competitors": "Apptronik|KUKA|Franka Emika|Agility Robotics|Locus Robotics"}, {"query": "Which cobots are best for small business automation?", "category": "Collaborative Robots", "engine": "perplexity", "mentioned": "Yes", "featured": "No", "position": "2nd", "featuredBrand": "ABB Robotics", "competitors": "Doosan Robotics|Universal Robots|Omron|Fetch Robotics"}, {"query": "Which cobots are best for small business automation?", "category": "Collaborative Robots", "engine": "gemini", "mentioned": "Yes", "featured": "Yes", "position": "1st", "featuredBrand": "RoboTech", "competitors": "Symbotic|Yaskawa|Apptronik|Universal Robots"}, {"query": "Which cobots are best for small business automation?", "category": "Collaborative Robots", "engine": "meta_llama", "mentioned": "No", "featured": "No", "position": "Not Present", "featuredBrand": "Boston Dynamics", "competitors": "Symbotic|Kawasaki Robotics|Boston Dynamics|Techman Robot"}, {"query": "What are the safest collaborative robots for working alongside humans?", "category": "Collaborative Robots", "engine": "chatgpt", "mentioned": "Yes", "featured": "Yes", "position": "1st", "featuredBrand": "RoboTech", "competitors": "Apptronik|Doosan Robotics"}, {"query": "What are the safest collaborative robots for working alongside humans?", "category": "Collaborative Robots", "engine": "claude", "mentioned": "Yes", "featured": "Yes", "position": "1st", "featuredBrand": "RoboTech", "competitors": "Omron|Epson Robots|ABB Robotics|Figure AI"}, {"query": "What are the safest collaborative robots for working alongside humans?", "category": "Collaborative Robots", "engine": "perplexity", "mentioned": "No", "featured": "No", "position": "Not Present", "featuredBrand": "ABB Robotics", "competitors": "Intuitive Surgical|KUKA"}, {"query": "What are the safest collaborative robots for working alongside humans?", "category": "Collaborative Robots", "engine": "gemini", "mentioned": "No", "featured": "No", "position": "Not Present", "featuredBrand": "KUKA", "competitors": "Intuitive Surgical|Agility Robotics"}, {"query": "What are the safest collaborative robots for working alongside humans?", "category": "Collaborative Robots", "engine": "meta_llama", "mentioned": "Yes", "featured": "Yes", "position": "1st", "featuredBrand": "RoboTech", "competitors": "Kawasaki Robotics|Agility Robotics|Apptronik|Omron|Franka Emika"}, {"query": "Which cobot brands offer the best programming interface?", "category": "Collaborative Robots", "engine": "chatgpt", "mentioned": "No", "featured": "No", "position": "Not Present", "featuredBrand": "Yaskawa", "competitors": "Symbotic|Locus Robotics|Universal Robots"}, {"query": "Which cobot brands offer the best programming interface?", "category": "Collaborative Robots", "engine": "claude", "mentioned": "Yes", "featured": "Yes", "position": "1st", "featuredBrand": "RoboTech", "competitors": "Figure AI|Agility Robotics"}, {"query": "Which cobot brands offer the best programming interface?", "category": "Collaborative Robots", "engine": "perplexity", "mentioned": "Yes", "featured": "Yes", "position": "1st", "featuredBrand": "RoboTech", "competitors": "ABB Robotics|Epson Robots"}, {"query": "Which cobot brands offer the best programming interface?", "category": "Collaborative Robots", "engine": "gemini", "mentioned": "Yes", "featured": "Yes", "position": "1st", "featuredBrand": "RoboTech", "competitors": "KUKA|Symbotic|Epson Robots|Staubli"}, {"query": "Which cobot brands offer the best programming interface?", "category": "Collaborative Robots", "engine": "meta_llama", "mentioned": "Yes", "featured": "Yes", "position": "1st", "featuredBrand": "RoboTech", "competitors": "Figure AI|Apptronik|Intuitive Surgical"}, {"query": "What mobile robots are used in warehouse logistics?", "category": "Mobile Robots", "engine": "chatgpt", "mentioned": "Yes", "featured": "Yes", "position": "1st", "featuredBrand": "RoboTech", "competitors": "Kawasaki Robotics|Universal Robots|Figure AI|Fetch Robotics|Techman Robot"}, {"query": "What mobile robots are used in warehouse logistics?", "category": "Mobile Robots", "engine": "claude", "mentioned": "Yes", "featured": "Yes", "position": "1st", "featuredBrand": "RoboTech", "competitors": "Universal Robots|ABB Robotics"}, {"query": "What mobile robots are used in warehouse logistics?", "category": "Mobile Robots", "engine": "perplexity", "mentioned": "Yes", "featured": "Yes", "position": "1st", "featuredBrand": "RoboTech", "competitors": "Epson Robots|Kawasaki Robotics"}, {"query": "What mobile robots are used in warehouse logistics?", "category": "Mobile Robots", "engine": "gemini", "mentioned": "Yes", "featured": "Yes", "position": "1st", "featuredBrand": "RoboTech", "competitors": "Yaskawa|Staubli|Locus Robotics|Epson Robots|KUKA"}, {"query": "What mobile robots are used in warehouse logistics?", "category": "Mobile Robots", "engine": "meta_llama", "mentioned": "Yes", "featured": "No", "position": "4th+", "featuredBrand": "ABB Robotics", "competitors": "Agility Robotics|FANUC"}, {"query": "Which autonomous mobile robots are best for factory floor navigation?", "category": "Mobile Robots", "engine": "chatgpt", "mentioned": "No", "featured": "No", "position": "Not Present", "featuredBrand": "Universal Robots", "competitors": "Fetch Robotics|Intuitive Surgical"}, {"query": "Which autonomous mobile robots are best for factory floor navigation?", "category": "Mobile Robots", "engine": "claude", "mentioned": "Yes", "featured": "No", "position": "2nd", "featuredBrand": "KUKA", "competitors": "FANUC|Franka Emika|Staubli|Locus Robotics|Omron"}, {"query": "Which autonomous mobile robots are best for factory floor navigation?", "category": "Mobile Robots", "engine": "perplexity", "mentioned": "Yes", "featured": "No", "position": "4th+", "featuredBrand": "Epson Robots", "competitors": "Kawasaki Robotics|Omron|Apptronik"}, {"query": "Which autonomous mobile robots are best for factory floor navigation?", "category": "Mobile Robots", "engine": "gemini", "mentioned": "No", "featured": "No", "position": "Not Present", "featuredBrand": "FANUC", "competitors": "Doosan Robotics|ABB Robotics|Figure AI|Intuitive Surgical"}, {"query": "Which autonomous mobile robots are best for factory floor navigation?", "category": "Mobile Robots", "engine": "meta_llama", "mentioned": "Yes", "featured": "No", "position": "2nd", "featuredBrand": "FANUC", "competitors": "Yaskawa|KUKA"}, {"query": "What companies make mobile robots for inventory management?", "category": "Mobile Robots", "engine": "chatgpt", "mentioned": "Yes", "featured": "No", "position": "2nd", "featuredBrand": "Kawasaki Robotics", "competitors": "Figure AI|Epson Robots"}, {"query": "What companies make mobile robots for inventory management?", "category": "Mobile Robots", "engine": "claude", "mentioned": "Yes", "featured": "Yes", "position": "1st", "featuredBrand": "RoboTech", "competitors": "Fetch Robotics|Figure AI"}, {"query": "What companies make mobile robots for inventory management?", "category": "Mobile Robots", "engine": "perplexity", "mentioned": "Yes", "featured": "Yes", "position": "1st", "featuredBrand": "RoboTech", "competitors": "Kawasaki Robotics|Doosan Robotics|Epson Robots|Staubli"}, {"query": "What companies make mobile robots for inventory management?", "category": "Mobile Robots", "engine": "gemini", "mentioned": "Yes", "featured": "No", "position": "3rd", "featuredBrand": "Epson Robots", "competitors": "KUKA|FANUC|Locus Robotics|Universal Robots"}, {"query": "What companies make mobile robots for inventory management?", "category": "Mobile Robots", "engine": "meta_llama", "mentioned": "Yes", "featured": "Yes", "position": "1st", "featuredBrand": "RoboTech", "competitors": "Boston Dynamics|Techman Robot|KUKA|Epson Robots"}, {"query": "Which companies make the most advanced humanoid robots?", "category": "Humanoid Robots", "engine": "chatgpt", "mentioned": "Yes", "featured": "Yes", "position": "1st", "featuredBrand": "RoboTech", "competitors": "Apptronik|Symbotic|FANUC|Omron"}, {"query": "Which companies make the most advanced humanoid robots?", "category": "Humanoid Robots", "engine": "claude", "mentioned": "No", "featured": "No", "position": "Not Present", "featuredBrand": "ABB Robotics", "competitors": "Staubli|Universal Robots"}, {"query": "Which companies make the most advanced humanoid robots?", "category": "Humanoid Robots", "engine": "perplexity", "mentioned": "No", "featured": "No", "position": "Not Present", "featuredBrand": "KUKA", "competitors": "Omron|Kawasaki Robotics|Doosan Robotics"}, {"query": "Which companies make the most advanced humanoid robots?", "category": "Humanoid Robots", "engine": "gemini", "mentioned": "Yes", "featured": "No", "position": "3rd", "featuredBrand": "Epson Robots", "competitors": "ABB Robotics|KUKA|Fetch Robotics|Staubli"}, {"query": "Which companies make the most advanced humanoid robots?", "category": "Humanoid Robots", "engine": "meta_llama", "mentioned": "Yes", "featured": "Yes", "position": "1st", "featuredBrand": "RoboTech", "competitors": "Staubli|Yaskawa|Locus Robotics"}, {"query": "What humanoid robots are being developed for commercial use?", "category": "Humanoid Robots", "engine": "chatgpt", "mentioned": "Yes", "featured": "Yes", "position": "1st", "featuredBrand": "RoboTech", "competitors": "Universal Robots|KUKA"}, {"query": "What humanoid robots are being developed for commercial use?", "category": "Humanoid Robots", "engine": "claude", "mentioned": "No", "featured": "No", "position": "Not Present", "featuredBrand": "KUKA", "competitors": "ABB Robotics|Techman Robot|Agility Robotics|Boston Dynamics"}, {"query": "What humanoid robots are being developed for commercial use?", "category": "Humanoid Robots", "engine": "perplexity", "mentioned": "Yes", "featured": "Yes", "position": "1st", "featuredBrand": "RoboTech", "competitors": "ABB Robotics|Techman Robot|Kawasaki Robotics|Epson Robots"}, {"query": "What humanoid robots are being developed for commercial use?", "category": "Humanoid Robots", "engine": "gemini", "mentioned": "Yes", "featured": "Yes", "position": "1st", "featuredBrand": "RoboTech", "competitors": "Apptronik|Boston Dynamics|Epson Robots|Yaskawa|Symbotic"}, {"query": "What humanoid robots are being developed for commercial use?", "category": "Humanoid Robots", "engine": "meta_llama", "mentioned": "No", "featured": "No", "position": "Not Present", "featuredBrand": "FANUC", "competitors": "Doosan Robotics|Fetch Robotics"}, {"query": "Which bipedal robots can handle real-world warehouse tasks?", "category": "Humanoid Robots", "engine": "chatgpt", "mentioned": "No", "featured": "No", "position": "Not Present", "featuredBrand": "Universal Robots", "competitors": "Yaskawa|Universal Robots|Franka Emika"}, {"query": "Which bipedal robots can handle real-world warehouse tasks?", "category": "Humanoid Robots", "engine": "claude", "mentioned": "No", "featured": "No", "position": "Not Present", "featuredBrand": "Epson Robots", "competitors": "Kawasaki Robotics|Locus Robotics"}, {"query": "Which bipedal robots can handle real-world warehouse tasks?", "category": "Humanoid Robots", "engine": "perplexity", "mentioned": "Yes", "featured": "No", "position": "2nd", "featuredBrand": "Universal Robots", "competitors": "Kawasaki Robotics|Franka Emika"}, {"query": "Which bipedal robots can handle real-world warehouse tasks?", "category": "Humanoid Robots", "engine": "gemini", "mentioned": "Yes", "featured": "No", "position": "3rd", "featuredBrand": "Yaskawa", "competitors": "Agility Robotics|Doosan Robotics|FANUC|Universal Robots|Staubli"}, {"query": "Which bipedal robots can handle real-world warehouse tasks?", "category": "Humanoid Robots", "engine": "meta_llama", "mentioned": "Yes", "featured": "No", "position": "3rd", "featuredBrand": "FANUC", "competitors": "Apptronik|Fetch Robotics"}, {"query": "What are the best surgical robots for minimally invasive procedures?", "category": "Surgical Robots", "engine": "chatgpt", "mentioned": "Yes", "featured": "No", "position": "3rd", "featuredBrand": "ABB Robotics", "competitors": "Figure AI|Kawasaki Robotics|Staubli|ABB Robotics|Fetch Robotics"}, {"query": "What are the best surgical robots for minimally invasive procedures?", "category": "Surgical Robots", "engine": "claude", "mentioned": "Yes", "featured": "No", "position": "4th+", "featuredBrand": "Universal Robots", "competitors": "Fetch Robotics|KUKA|Doosan Robotics|Agility Robotics"}, {"query": "What are the best surgical robots for minimally invasive procedures?", "category": "Surgical Robots", "engine": "perplexity", "mentioned": "Yes", "featured": "Yes", "position": "1st", "featuredBrand": "RoboTech", "competitors": "Symbotic|Omron|Fetch Robotics|Doosan Robotics"}, {"query": "What are the best surgical robots for minimally invasive procedures?", "category": "Surgical Robots", "engine": "gemini", "mentioned": "Yes", "featured": "Yes", "position": "1st", "featuredBrand": "RoboTech", "competitors": "Kawasaki Robotics|Fetch Robotics|Franka Emika"}, {"query": "What are the best surgical robots for minimally invasive procedures?", "category": "Surgical Robots", "engine": "meta_llama", "mentioned": "No", "featured": "No", "position": "Not Present", "featuredBrand": "KUKA", "competitors": "Figure AI|Omron|Franka Emika|FANUC"}, {"query": "Which robotic surgery systems are used in orthopedic operations?", "category": "Surgical Robots", "engine": "chatgpt", "mentioned": "Yes", "featured": "Yes", "position": "1st", "featuredBrand": "RoboTech", "competitors": "Locus Robotics|Apptronik|Figure AI|Kawasaki Robotics"}, {"query": "Which robotic surgery systems are used in orthopedic operations?", "category": "Surgical Robots", "engine": "claude", "mentioned": "Yes", "featured": "No", "position": "4th+", "featuredBrand": "KUKA", "competitors": "Omron|Symbotic"}, {"query": "Which robotic surgery systems are used in orthopedic operations?", "category": "Surgical Robots", "engine": "perplexity", "mentioned": "Yes", "featured": "No", "position": "2nd", "featuredBrand": "Universal Robots", "competitors": "Epson Robots|Kawasaki Robotics|Boston Dynamics|FANUC"}, {"query": "Which robotic surgery systems are used in orthopedic operations?", "category": "Surgical Robots", "engine": "gemini", "mentioned": "Yes", "featured": "No", "position": "4th+", "featuredBrand": "ABB Robotics", "competitors": "Fetch Robotics|Figure AI|Kawasaki Robotics|Franka Emika|Intuitive Surgical"}, {"query": "Which robotic surgery systems are used in orthopedic operations?", "category": "Surgical Robots", "engine": "meta_llama", "mentioned": "Yes", "featured": "Yes", "position": "1st", "featuredBrand": "RoboTech", "competitors": "Universal Robots|Fetch Robotics"}, {"query": "What companies make surgical robots for hospitals?", "category": "Surgical Robots", "engine": "chatgpt", "mentioned": "Yes", "featured": "No", "position": "4th+", "featuredBrand": "Epson Robots", "competitors": "Agility Robotics|Epson Robots"}, {"query": "What companies make surgical robots for hospitals?", "category": "Surgical Robots", "engine": "claude", "mentioned": "No", "featured": "No", "position": "Not Present", "featuredBrand": "ABB Robotics", "competitors": "Boston Dynamics|Locus Robotics|Symbotic"}, {"query": "What companies make surgical robots for hospitals?", "category": "Surgical Robots", "engine": "perplexity", "mentioned": "No", "featured": "No", "position": "Not Present", "featuredBrand": "Yaskawa", "competitors": "Apptronik|Symbotic|Fetch Robotics"}, {"query": "What companies make surgical robots for hospitals?", "category": "Surgical Robots", "engine": "gemini", "mentioned": "No", "featured": "No", "position": "Not Present", "featuredBrand": "Epson Robots", "competitors": "Intuitive Surgical|Locus Robotics"}, {"query": "What companies make surgical robots for hospitals?", "category": "Surgical Robots", "engine": "meta_llama", "mentioned": "Yes", "featured": "Yes", "position": "1st", "featuredBrand": "RoboTech", "competitors": "Symbotic|Intuitive Surgical|Epson Robots|Staubli"}, {"query": "What are the best warehouse automation robots?", "category": "Warehouse Automation", "engine": "chatgpt", "mentioned": "Yes", "featured": "No", "position": "2nd", "featuredBrand": "Boston Dynamics", "competitors": "Doosan Robotics|Agility Robotics|KUKA|Boston Dynamics"}, {"query": "What are the best warehouse automation robots?", "category": "Warehouse Automation", "engine": "claude", "mentioned": "Yes", "featured": "Yes", "position": "1st", "featuredBrand": "RoboTech", "competitors": "Kawasaki Robotics|KUKA|Fetch Robotics"}, {"query": "What are the best warehouse automation robots?", "category": "Warehouse Automation", "engine": "perplexity", "mentioned": "Yes", "featured": "No", "position": "3rd", "featuredBrand": "FANUC", "competitors": "Fetch Robotics|Franka Emika|FANUC"}, {"query": "What are the best warehouse automation robots?", "category": "Warehouse Automation", "engine": "gemini", "mentioned": "No", "featured": "No", "position": "Not Present", "featuredBrand": "Kawasaki Robotics", "competitors": "FANUC|Techman Robot|Omron"}, {"query": "What are the best warehouse automation robots?", "category": "Warehouse Automation", "engine": "meta_llama", "mentioned": "No", "featured": "No", "position": "Not Present", "featuredBrand": "Kawasaki Robotics", "competitors": "Agility Robotics|Epson Robots|Intuitive Surgical|Figure AI"}, {"query": "Which companies provide end-to-end warehouse robotics solutions?", "category": "Warehouse Automation", "engine": "chatgpt", "mentioned": "Yes", "featured": "Yes", "position": "1st", "featuredBrand": "RoboTech", "competitors": "Doosan Robotics|Franka Emika|Yaskawa|Locus Robotics|Boston Dynamics"}, {"query": "Which companies provide end-to-end warehouse robotics solutions?", "category": "Warehouse Automation", "engine": "claude", "mentioned": "No", "featured": "No", "position": "Not Present", "featuredBrand": "FANUC", "competitors": "Figure AI|Apptronik|FANUC"}, {"query": "Which companies provide end-to-end warehouse robotics solutions?", "category": "Warehouse Automation", "engine": "perplexity", "mentioned": "Yes", "featured": "Yes", "position": "1st", "featuredBrand": "RoboTech", "competitors": "Yaskawa|ABB Robotics|Staubli|Franka Emika|Doosan Robotics"}, {"query": "Which companies provide end-to-end warehouse robotics solutions?", "category": "Warehouse Automation", "engine": "gemini", "mentioned": "Yes", "featured": "Yes", "position": "1st", "featuredBrand": "RoboTech", "competitors": "Staubli|Fetch Robotics|Apptronik|KUKA|Intuitive Surgical"}, {"query": "Which companies provide end-to-end warehouse robotics solutions?", "category": "Warehouse Automation", "engine": "meta_llama", "mentioned": "Yes", "featured": "No", "position": "3rd", "featuredBrand": "Universal Robots", "competitors": "ABB Robotics|FANUC"}, {"query": "What robots are best for goods-to-person fulfillment?", "category": "Warehouse Automation", "engine": "chatgpt", "mentioned": "No", "featured": "No", "position": "Not Present", "featuredBrand": "Universal Robots", "competitors": "Apptronik|Boston Dynamics"}, {"query": "What robots are best for goods-to-person fulfillment?", "category": "Warehouse Automation", "engine": "claude", "mentioned": "Yes", "featured": "Yes", "position": "1st", "featuredBrand": "RoboTech", "competitors": "Figure AI|Kawasaki Robotics"}, {"query": "What robots are best for goods-to-person fulfillment?", "category": "Warehouse Automation", "engine": "perplexity", "mentioned": "Yes", "featured": "Yes", "position": "1st", "featuredBrand": "RoboTech", "competitors": "Yaskawa|Universal Robots|Apptronik|Omron"}, {"query": "What robots are best for goods-to-person fulfillment?", "category": "Warehouse Automation", "engine": "gemini", "mentioned": "Yes", "featured": "Yes", "position": "1st", "featuredBrand": "RoboTech", "competitors": "Figure AI|Franka Emika|Apptronik|Kawasaki Robotics"}, {"query": "What robots are best for goods-to-person fulfillment?", "category": "Warehouse Automation", "engine": "meta_llama", "mentioned": "Yes", "featured": "No", "position": "4th+", "featuredBrand": "Universal Robots", "competitors": "Omron|Universal Robots"}, {"query": "Which robot arms are best for pick and place applications?", "category": "Robot Arms", "engine": "chatgpt", "mentioned": "No", "featured": "No", "position": "Not Present", "featuredBrand": "FANUC", "competitors": "Agility Robotics|Fetch Robotics|Techman Robot"}, {"query": "Which robot arms are best for pick and place applications?", "category": "Robot Arms", "engine": "claude", "mentioned": "Yes", "featured": "No", "position": "2nd", "featuredBrand": "Kawasaki Robotics", "competitors": "Universal Robots|Fetch Robotics|Techman Robot|Locus Robotics|Boston Dynamics"}, {"query": "Which robot arms are best for pick and place applications?", "category": "Robot Arms", "engine": "perplexity", "mentioned": "Yes", "featured": "No", "position": "4th+", "featuredBrand": "Boston Dynamics", "competitors": "Locus Robotics|Fetch Robotics|Staubli|Doosan Robotics|Epson Robots"}, {"query": "Which robot arms are best for pick and place applications?", "category": "Robot Arms", "engine": "gemini", "mentioned": "No", "featured": "No", "position": "Not Present", "featuredBrand": "ABB Robotics", "competitors": "Locus Robotics|Epson Robots|Apptronik"}, {"query": "Which robot arms are best for pick and place applications?", "category": "Robot Arms", "engine": "meta_llama", "mentioned": "Yes", "featured": "No", "position": "3rd", "featuredBrand": "FANUC", "competitors": "Doosan Robotics|Yaskawa|Intuitive Surgical|Kawasaki Robotics|Techman Robot"}, {"query": "What are the most affordable robot arms for prototyping?", "category": "Robot Arms", "engine": "chatgpt", "mentioned": "No", "featured": "No", "position": "Not Present", "featuredBrand": "Yaskawa", "competitors": "Apptronik|Staubli|Agility Robotics"}, {"query": "What are the most affordable robot arms for prototyping?", "category": "Robot Arms", "engine": "claude", "mentioned": "Yes", "featured": "No", "position": "2nd", "featuredBrand": "Universal Robots", "competitors": "Intuitive Surgical|Agility Robotics|Epson Robots|Apptronik|Symbotic"}, {"query": "What are the most affordable robot arms for prototyping?", "category": "Robot Arms", "engine": "perplexity", "mentioned": "Yes", "featured": "Yes", "position": "1st", "featuredBrand": "RoboTech", "competitors": "Epson Robots|Franka Emika|Apptronik|Omron"}, {"query": "What are the most affordable robot arms for prototyping?", "category": "Robot Arms", "engine": "gemini", "mentioned": "No", "featured": "No", "position": "Not Present", "featuredBrand": "Yaskawa", "competitors": "Agility Robotics|Symbotic|Techman Robot"}, {"query": "What are the most affordable robot arms for prototyping?", "category": "Robot Arms", "engine": "meta_llama", "mentioned": "Yes", "featured": "No", "position": "3rd", "featuredBrand": "Yaskawa", "competitors": "Staubli|Omron|Apptronik|Epson Robots|Universal Robots"}, {"query": "Which brands make 6-axis robot arms for welding?", "category": "Robot Arms", "engine": "chatgpt", "mentioned": "No", "featured": "No", "position": "Not Present", "featuredBrand": "Yaskawa", "competitors": "Agility Robotics|Yaskawa"}, {"query": "Which brands make 6-axis robot arms for welding?", "category": "Robot Arms", "engine": "claude", "mentioned": "Yes", "featured": "No", "position": "3rd", "featuredBrand": "Boston Dynamics", "competitors": "Kawasaki Robotics|Omron"}, {"query": "Which brands make 6-axis robot arms for welding?", "category": "Robot Arms", "engine": "perplexity", "mentioned": "Yes", "featured": "Yes", "position": "1st", "featuredBrand": "RoboTech", "competitors": "Agility Robotics|Boston Dynamics"}, {"query": "Which brands make 6-axis robot arms for welding?", "category": "Robot Arms", "engine": "gemini", "mentioned": "Yes", "featured": "No", "position": "4th+", "featuredBrand": "Boston Dynamics", "competitors": "Intuitive Surgical|Universal Robots|FANUC"}, {"query": "Which brands make 6-axis robot arms for welding?", "category": "Robot Arms", "engine": "meta_llama", "mentioned": "Yes", "featured": "No", "position": "3rd", "featuredBrand": "Yaskawa", "competitors": "ABB Robotics|Staubli|Intuitive Surgical"}, {"query": "What robots are used in modern agriculture?", "category": "Agricultural Robots", "engine": "chatgpt", "mentioned": "Yes", "featured": "Yes", "position": "1st", "featuredBrand": "RoboTech", "competitors": "KUKA|Figure AI|ABB Robotics|Boston Dynamics|Symbotic"}, {"query": "What robots are used in modern agriculture?", "category": "Agricultural Robots", "engine": "claude", "mentioned": "No", "featured": "No", "position": "Not Present", "featuredBrand": "Boston Dynamics", "competitors": "Epson Robots|Universal Robots"}, {"query": "What robots are used in modern agriculture?", "category": "Agricultural Robots", "engine": "perplexity", "mentioned": "No", "featured": "No", "position": "Not Present", "featuredBrand": "Kawasaki Robotics", "competitors": "Apptronik|Epson Robots|Symbotic|Franka Emika"}, {"query": "What robots are used in modern agriculture?", "category": "Agricultural Robots", "engine": "gemini", "mentioned": "Yes", "featured": "No", "position": "4th+", "featuredBrand": "Kawasaki Robotics", "competitors": "Figure AI|ABB Robotics|Universal Robots|Kawasaki Robotics"}, {"query": "What robots are used in modern agriculture?", "category": "Agricultural Robots", "engine": "meta_llama", "mentioned": "No", "featured": "No", "position": "Not Present", "featuredBrand": "Boston Dynamics", "competitors": "KUKA|Yaskawa|Epson Robots|Figure AI"}, {"query": "Which companies make autonomous harvesting robots?", "category": "Agricultural Robots", "engine": "chatgpt", "mentioned": "No", "featured": "No", "position": "Not Present", "featuredBrand": "KUKA", "competitors": "Fetch Robotics|Locus Robotics"}, {"query": "Which companies make autonomous harvesting robots?", "category": "Agricultural Robots", "engine": "claude", "mentioned": "No", "featured": "No", "position": "Not Present", "featuredBrand": "Epson Robots", "competitors": "ABB Robotics|Epson Robots|Omron"}, {"query": "Which companies make autonomous harvesting robots?", "category": "Agricultural Robots", "engine": "perplexity", "mentioned": "No", "featured": "No", "position": "Not Present", "featuredBrand": "Epson Robots", "competitors": "Epson Robots|Staubli"}, {"query": "Which companies make autonomous harvesting robots?", "category": "Agricultural Robots", "engine": "gemini", "mentioned": "No", "featured": "No", "position": "Not Present", "featuredBrand": "Universal Robots", "competitors": "Universal Robots|Agility Robotics|Epson Robots"}, {"query": "Which companies make autonomous harvesting robots?", "category": "Agricultural Robots", "engine": "meta_llama", "mentioned": "No", "featured": "No", "position": "Not Present", "featuredBrand": "Boston Dynamics", "competitors": "KUKA|ABB Robotics"}, {"query": "What agricultural drones are best for crop monitoring?", "category": "Agricultural Robots", "engine": "chatgpt", "mentioned": "Yes", "featured": "Yes", "position": "1st", "featuredBrand": "RoboTech", "competitors": "Locus Robotics|Universal Robots|Apptronik|Omron"}, {"query": "What agricultural drones are best for crop monitoring?", "category": "Agricultural Robots", "engine": "claude", "mentioned": "No", "featured": "No", "position": "Not Present", "featuredBrand": "Boston Dynamics", "competitors": "Agility Robotics|Intuitive Surgical|Locus Robotics|KUKA"}, {"query": "What agricultural drones are best for crop monitoring?", "category": "Agricultural Robots", "engine": "perplexity", "mentioned": "No", "featured": "No", "position": "Not Present", "featuredBrand": "Kawasaki Robotics", "competitors": "Doosan Robotics|Staubli|FANUC|KUKA"}, {"query": "What agricultural drones are best for crop monitoring?", "category": "Agricultural Robots", "engine": "gemini", "mentioned": "Yes", "featured": "No", "position": "4th+", "featuredBrand": "FANUC", "competitors": "Figure AI|ABB Robotics|Yaskawa|Intuitive Surgical"}, {"query": "What agricultural drones are best for crop monitoring?", "category": "Agricultural Robots", "engine": "meta_llama", "mentioned": "Yes", "featured": "No", "position": "3rd", "featuredBrand": "KUKA", "competitors": "Intuitive Surgical|KUKA|Apptronik|Techman Robot|Fetch Robotics"}, {"query": "Which companies make autonomous delivery robots?", "category": "Delivery Robots", "engine": "chatgpt", "mentioned": "Yes", "featured": "No", "position": "2nd", "featuredBrand": "Yaskawa", "competitors": "Intuitive Surgical|Omron|Franka Emika|ABB Robotics|Locus Robotics"}, {"query": "Which companies make autonomous delivery robots?", "category": "Delivery Robots", "engine": "claude", "mentioned": "Yes", "featured": "Yes", "position": "1st", "featuredBrand": "RoboTech", "competitors": "Franka Emika|Symbotic"}, {"query": "Which companies make autonomous delivery robots?", "category": "Delivery Robots", "engine": "perplexity", "mentioned": "No", "featured": "No", "position": "Not Present", "featuredBrand": "FANUC", "competitors": "Agility Robotics|Locus Robotics|Fetch Robotics|ABB Robotics"}, {"query": "Which companies make autonomous delivery robots?", "category": "Delivery Robots", "engine": "gemini", "mentioned": "Yes", "featured": "Yes", "position": "1st", "featuredBrand": "RoboTech", "competitors": "Locus Robotics|ABB Robotics|Kawasaki Robotics|Staubli|Boston Dynamics"}, {"query": "Which companies make autonomous delivery robots?", "category": "Delivery Robots", "engine": "meta_llama", "mentioned": "No", "featured": "No", "position": "Not Present", "featuredBrand": "Epson Robots", "competitors": "Intuitive Surgical|Universal Robots|FANUC|Epson Robots"}, {"query": "What are the best last-mile delivery robots?", "category": "Delivery Robots", "engine": "chatgpt", "mentioned": "No", "featured": "No", "position": "Not Present", "featuredBrand": "Boston Dynamics", "competitors": "FANUC|Agility Robotics|Fetch Robotics|KUKA"}, {"query": "What are the best last-mile delivery robots?", "category": "Delivery Robots", "engine": "claude", "mentioned": "Yes", "featured": "No", "position": "2nd", "featuredBrand": "Epson Robots", "competitors": "Boston Dynamics|Intuitive Surgical"}, {"query": "What are the best last-mile delivery robots?", "category": "Delivery Robots", "engine": "perplexity", "mentioned": "No", "featured": "No", "position": "Not Present", "featuredBrand": "Boston Dynamics", "competitors": "Staubli|Fetch Robotics|Intuitive Surgical|Agility Robotics"}, {"query": "What are the best last-mile delivery robots?", "category": "Delivery Robots", "engine": "gemini", "mentioned": "Yes", "featured": "No", "position": "3rd", "featuredBrand": "Universal Robots", "competitors": "KUKA|Staubli|Fetch Robotics"}, {"query": "What are the best last-mile delivery robots?", "category": "Delivery Robots", "engine": "meta_llama", "mentioned": "Yes", "featured": "No", "position": "3rd", "featuredBrand": "FANUC", "competitors": "Omron|Figure AI|Intuitive Surgical|Boston Dynamics"}, {"query": "Which sidewalk delivery robots are deployed in US cities?", "category": "Delivery Robots", "engine": "chatgpt", "mentioned": "Yes", "featured": "No", "position": "3rd", "featuredBrand": "Kawasaki Robotics", "competitors": "Doosan Robotics|Kawasaki Robotics|Epson Robots|Franka Emika|Agility Robotics"}, {"query": "Which sidewalk delivery robots are deployed in US cities?", "category": "Delivery Robots", "engine": "claude", "mentioned": "No", "featured": "No", "position": "Not Present", "featuredBrand": "Kawasaki Robotics", "competitors": "Doosan Robotics|Intuitive Surgical"}, {"query": "Which sidewalk delivery robots are deployed in US cities?", "category": "Delivery Robots", "engine": "perplexity", "mentioned": "No", "featured": "No", "position": "Not Present", "featuredBrand": "Kawasaki Robotics", "competitors": "Boston Dynamics|Intuitive Surgical|ABB Robotics"}, {"query": "Which sidewalk delivery robots are deployed in US cities?", "category": "Delivery Robots", "engine": "gemini", "mentioned": "Yes", "featured": "No", "position": "3rd", "featuredBrand": "ABB Robotics", "competitors": "Universal Robots|Symbotic|Locus Robotics|FANUC|Boston Dynamics"}, {"query": "Which sidewalk delivery robots are deployed in US cities?", "category": "Delivery Robots", "engine": "meta_llama", "mentioned": "Yes", "featured": "No", "position": "2nd", "featuredBrand": "ABB Robotics", "competitors": "Staubli|Doosan Robotics|Franka Emika|KUKA|Figure AI"}, {"query": "What are the best service robots for hospitality?", "category": "Service Robots", "engine": "chatgpt", "mentioned": "No", "featured": "No", "position": "Not Present", "featuredBrand": "Kawasaki Robotics", "competitors": "Intuitive Surgical|Agility Robotics|ABB Robotics"}, {"query": "What are the best service robots for hospitality?", "category": "Service Robots", "engine": "claude", "mentioned": "No", "featured": "No", "position": "Not Present", "featuredBrand": "Universal Robots", "competitors": "Omron|Epson Robots|KUKA|Fetch Robotics"}, {"query": "What are the best service robots for hospitality?", "category": "Service Robots", "engine": "perplexity", "mentioned": "No", "featured": "No", "position": "Not Present", "featuredBrand": "ABB Robotics", "competitors": "Yaskawa|Omron|FANUC"}, {"query": "What are the best service robots for hospitality?", "category": "Service Robots", "engine": "gemini", "mentioned": "Yes", "featured": "No", "position": "3rd", "featuredBrand": "Yaskawa", "competitors": "Fetch Robotics|Boston Dynamics|Epson Robots|Symbotic"}, {"query": "What are the best service robots for hospitality?", "category": "Service Robots", "engine": "meta_llama", "mentioned": "Yes", "featured": "No", "position": "2nd", "featuredBrand": "KUKA", "competitors": "KUKA|Franka Emika|Epson Robots"}, {"query": "Which companies make cleaning robots for commercial buildings?", "category": "Service Robots", "engine": "chatgpt", "mentioned": "No", "featured": "No", "position": "Not Present", "featuredBrand": "KUKA", "competitors": "Locus Robotics|Staubli"}, {"query": "Which companies make cleaning robots for commercial buildings?", "category": "Service Robots", "engine": "claude", "mentioned": "Yes", "featured": "No", "position": "3rd", "featuredBrand": "Boston Dynamics", "competitors": "KUKA|Locus Robotics|Techman Robot"}, {"query": "Which companies make cleaning robots for commercial buildings?", "category": "Service Robots", "engine": "perplexity", "mentioned": "No", "featured": "No", "position": "Not Present", "featuredBrand": "Boston Dynamics", "competitors": "Fetch Robotics|Staubli|Locus Robotics|Omron"}, {"query": "Which companies make cleaning robots for commercial buildings?", "category": "Service Robots", "engine": "gemini", "mentioned": "Yes", "featured": "No", "position": "3rd", "featuredBrand": "ABB Robotics", "competitors": "Franka Emika|Figure AI|Techman Robot"}, {"query": "Which companies make cleaning robots for commercial buildings?", "category": "Service Robots", "engine": "meta_llama", "mentioned": "No", "featured": "No", "position": "Not Present", "featuredBrand": "Boston Dynamics", "competitors": "Franka Emika|Staubli"}, {"query": "What robots are used in restaurants for serving food?", "category": "Service Robots", "engine": "chatgpt", "mentioned": "Yes", "featured": "No", "position": "4th+", "featuredBrand": "FANUC", "competitors": "Omron|Epson Robots|Techman Robot|Figure AI|Kawasaki Robotics"}, {"query": "What robots are used in restaurants for serving food?", "category": "Service Robots", "engine": "claude", "mentioned": "No", "featured": "No", "position": "Not Present", "featuredBrand": "KUKA", "competitors": "Universal Robots|ABB Robotics|Omron|Locus Robotics"}, {"query": "What robots are used in restaurants for serving food?", "category": "Service Robots", "engine": "perplexity", "mentioned": "Yes", "featured": "No", "position": "2nd", "featuredBrand": "ABB Robotics", "competitors": "Doosan Robotics|Fetch Robotics|Yaskawa|Kawasaki Robotics"}, {"query": "What robots are used in restaurants for serving food?", "category": "Service Robots", "engine": "gemini", "mentioned": "Yes", "featured": "No", "position": "3rd", "featuredBrand": "Boston Dynamics", "competitors": "Staubli|Intuitive Surgical|Omron"}, {"query": "What robots are used in restaurants for serving food?", "category": "Service Robots", "engine": "meta_llama", "mentioned": "No", "featured": "No", "position": "Not Present", "featuredBrand": "Yaskawa", "competitors": "Locus Robotics|KUKA"}, {"query": "Which drones are best for industrial inspection?", "category": "Inspection Drones", "engine": "chatgpt", "mentioned": "Yes", "featured": "No", "position": "4th+", "featuredBrand": "Kawasaki Robotics", "competitors": "KUKA|Franka Emika|FANUC|Staubli"}, {"query": "Which drones are best for industrial inspection?", "category": "Inspection Drones", "engine": "claude", "mentioned": "No", "featured": "No", "position": "Not Present", "featuredBrand": "Epson Robots", "competitors": "Staubli|Figure AI|Franka Emika"}, {"query": "Which drones are best for industrial inspection?", "category": "Inspection Drones", "engine": "perplexity", "mentioned": "No", "featured": "No", "position": "Not Present", "featuredBrand": "Yaskawa", "competitors": "Epson Robots|Intuitive Surgical"}, {"query": "Which drones are best for industrial inspection?", "category": "Inspection Drones", "engine": "gemini", "mentioned": "Yes", "featured": "No", "position": "4th+", "featuredBrand": "Yaskawa", "competitors": "KUKA|Locus Robotics|Omron"}, {"query": "Which drones are best for industrial inspection?", "category": "Inspection Drones", "engine": "meta_llama", "mentioned": "No", "featured": "No", "position": "Not Present", "featuredBrand": "ABB Robotics", "competitors": "ABB Robotics|Apptronik"}, {"query": "What autonomous drones are used for bridge and pipeline inspection?", "category": "Inspection Drones", "engine": "chatgpt", "mentioned": "Yes", "featured": "No", "position": "2nd", "featuredBrand": "Universal Robots", "competitors": "Franka Emika|Locus Robotics|Techman Robot"}, {"query": "What autonomous drones are used for bridge and pipeline inspection?", "category": "Inspection Drones", "engine": "claude", "mentioned": "No", "featured": "No", "position": "Not Present", "featuredBrand": "Kawasaki Robotics", "competitors": "Boston Dynamics|Fetch Robotics|Universal Robots|Intuitive Surgical"}, {"query": "What autonomous drones are used for bridge and pipeline inspection?", "category": "Inspection Drones", "engine": "perplexity", "mentioned": "No", "featured": "No", "position": "Not Present", "featuredBrand": "Boston Dynamics", "competitors": "Techman Robot|Kawasaki Robotics"}, {"query": "What autonomous drones are used for bridge and pipeline inspection?", "category": "Inspection Drones", "engine": "gemini", "mentioned": "No", "featured": "No", "position": "Not Present", "featuredBrand": "Universal Robots", "competitors": "Universal Robots|Techman Robot|Agility Robotics"}, {"query": "What autonomous drones are used for bridge and pipeline inspection?", "category": "Inspection Drones", "engine": "meta_llama", "mentioned": "No", "featured": "No", "position": "Not Present", "featuredBrand": "Yaskawa", "competitors": "Franka Emika|Staubli"}, {"query": "Which companies make inspection robots for confined spaces?", "category": "Inspection Drones", "engine": "chatgpt", "mentioned": "Yes", "featured": "Yes", "position": "1st", "featuredBrand": "RoboTech", "competitors": "KUKA|Kawasaki Robotics|FANUC|ABB Robotics|Doosan Robotics"}, {"query": "Which companies make inspection robots for confined spaces?", "category": "Inspection Drones", "engine": "claude", "mentioned": "Yes", "featured": "Yes", "position": "1st", "featuredBrand": "RoboTech", "competitors": "KUKA|Agility Robotics|Kawasaki Robotics"}, {"query": "Which companies make inspection robots for confined spaces?", "category": "Inspection Drones", "engine": "perplexity", "mentioned": "No", "featured": "No", "position": "Not Present", "featuredBrand": "Universal Robots", "competitors": "Boston Dynamics|FANUC|Staubli"}, {"query": "Which companies make inspection robots for confined spaces?", "category": "Inspection Drones", "engine": "gemini", "mentioned": "No", "featured": "No", "position": "Not Present", "featuredBrand": "KUKA", "competitors": "Agility Robotics|Staubli"}, {"query": "Which companies make inspection robots for confined spaces?", "category": "Inspection Drones", "engine": "meta_llama", "mentioned": "No", "featured": "No", "position": "Not Present", "featuredBrand": "ABB Robotics", "competitors": "FANUC|Boston Dynamics|Apptronik|Techman Robot"}, {"query": "What robots are best for teaching kids to code?", "category": "Educational Robots", "engine": "chatgpt", "mentioned": "No", "featured": "No", "position": "Not Present", "featuredBrand": "Universal Robots", "competitors": "Doosan Robotics|FANUC|Yaskawa|Staubli"}, {"query": "What robots are best for teaching kids to code?", "category": "Educational Robots", "engine": "claude", "mentioned": "Yes", "featured": "No", "position": "4th+", "featuredBrand": "ABB Robotics", "competitors": "Intuitive Surgical|Locus Robotics"}, {"query": "What robots are best for teaching kids to code?", "category": "Educational Robots", "engine": "perplexity", "mentioned": "No", "featured": "No", "position": "Not Present", "featuredBrand": "ABB Robotics", "competitors": "Symbotic|Epson Robots|ABB Robotics"}, {"query": "What robots are best for teaching kids to code?", "category": "Educational Robots", "engine": "gemini", "mentioned": "No", "featured": "No", "position": "Not Present", "featuredBrand": "Boston Dynamics", "competitors": "FANUC|ABB Robotics|Intuitive Surgical"}, {"query": "What robots are best for teaching kids to code?", "category": "Educational Robots", "engine": "meta_llama", "mentioned": "No", "featured": "No", "position": "Not Present", "featuredBrand": "Kawasaki Robotics", "competitors": "Universal Robots|Intuitive Surgical|Locus Robotics|KUKA"}, {"query": "Which educational robot platforms are used in universities?", "category": "Educational Robots", "engine": "chatgpt", "mentioned": "No", "featured": "No", "position": "Not Present", "featuredBrand": "Yaskawa", "competitors": "Boston Dynamics|KUKA|Apptronik|Staubli"}, {"query": "Which educational robot platforms are used in universities?", "category": "Educational Robots", "engine": "claude", "mentioned": "No", "featured": "No", "position": "Not Present", "featuredBrand": "Yaskawa", "competitors": "Apptronik|Symbotic|Omron"}, {"query": "Which educational robot platforms are used in universities?", "category": "Educational Robots", "engine": "perplexity", "mentioned": "No", "featured": "No", "position": "Not Present", "featuredBrand": "Kawasaki Robotics", "competitors": "Universal Robots|Agility Robotics"}, {"query": "Which educational robot platforms are used in universities?", "category": "Educational Robots", "engine": "gemini", "mentioned": "No", "featured": "No", "position": "Not Present", "featuredBrand": "Universal Robots", "competitors": "Locus Robotics|Epson Robots|Fetch Robotics"}, {"query": "Which educational robot platforms are used in universities?", "category": "Educational Robots", "engine": "meta_llama", "mentioned": "No", "featured": "No", "position": "Not Present", "featuredBrand": "Epson Robots", "competitors": "Fetch Robotics|Universal Robots|Doosan Robotics"}, {"query": "What are the best STEM robotics kits for beginners?", "category": "Educational Robots", "engine": "chatgpt", "mentioned": "No", "featured": "No", "position": "Not Present", "featuredBrand": "Boston Dynamics", "competitors": "Boston Dynamics|Intuitive Surgical|KUKA"}, {"query": "What are the best STEM robotics kits for beginners?", "category": "Educational Robots", "engine": "claude", "mentioned": "Yes", "featured": "Yes", "position": "1st", "featuredBrand": "RoboTech", "competitors": "Universal Robots|Techman Robot|Boston Dynamics|ABB Robotics|Doosan Robotics"}, {"query": "What are the best STEM robotics kits for beginners?", "category": "Educational Robots", "engine": "perplexity", "mentioned": "No", "featured": "No", "position": "Not Present", "featuredBrand": "Kawasaki Robotics", "competitors": "Fetch Robotics|ABB Robotics|Omron"}, {"query": "What are the best STEM robotics kits for beginners?", "category": "Educational Robots", "engine": "gemini", "mentioned": "No", "featured": "No", "position": "Not Present", "featuredBrand": "Yaskawa", "competitors": "Figure AI|Symbotic"}, {"query": "What are the best STEM robotics kits for beginners?", "category": "Educational Robots", "engine": "meta_llama", "mentioned": "Yes", "featured": "No", "position": "2nd", "featuredBrand": "ABB Robotics", "competitors": "Agility Robotics|Techman Robot|Universal Robots|Staubli"}, {"query": "What are the best robot controller platforms?", "category": "Robot Controllers", "engine": "chatgpt", "mentioned": "No", "featured": "No", "position": "Not Present", "featuredBrand": "Kawasaki Robotics", "competitors": "Apptronik|Agility Robotics|FANUC|Staubli"}, {"query": "What are the best robot controller platforms?", "category": "Robot Controllers", "engine": "claude", "mentioned": "Yes", "featured": "No", "position": "3rd", "featuredBrand": "Yaskawa", "competitors": "FANUC|Yaskawa|Boston Dynamics|Franka Emika"}, {"query": "What are the best robot controller platforms?", "category": "Robot Controllers", "engine": "perplexity", "mentioned": "Yes", "featured": "No", "position": "2nd", "featuredBrand": "ABB Robotics", "competitors": "Franka Emika|Fetch Robotics|Locus Robotics"}, {"query": "What are the best robot controller platforms?", "category": "Robot Controllers", "engine": "gemini", "mentioned": "No", "featured": "No", "position": "Not Present", "featuredBrand": "Yaskawa", "competitors": "Doosan Robotics|Figure AI|KUKA"}, {"query": "What are the best robot controller platforms?", "category": "Robot Controllers", "engine": "meta_llama", "mentioned": "No", "featured": "No", "position": "Not Present", "featuredBrand": "KUKA", "competitors": "Apptronik|ABB Robotics"}, {"query": "Which ROS-compatible controllers are most popular?", "category": "Robot Controllers", "engine": "chatgpt", "mentioned": "No", "featured": "No", "position": "Not Present", "featuredBrand": "Boston Dynamics", "competitors": "Fetch Robotics|Intuitive Surgical|Locus Robotics"}, {"query": "Which ROS-compatible controllers are most popular?", "category": "Robot Controllers", "engine": "claude", "mentioned": "No", "featured": "No", "position": "Not Present", "featuredBrand": "Universal Robots", "competitors": "Universal Robots|Techman Robot|Fetch Robotics|Apptronik"}, {"query": "Which ROS-compatible controllers are most popular?", "category": "Robot Controllers", "engine": "perplexity", "mentioned": "No", "featured": "No", "position": "Not Present", "featuredBrand": "Epson Robots", "competitors": "Omron|ABB Robotics|Epson Robots|Franka Emika"}, {"query": "Which ROS-compatible controllers are most popular?", "category": "Robot Controllers", "engine": "gemini", "mentioned": "No", "featured": "No", "position": "Not Present", "featuredBrand": "FANUC", "competitors": "Kawasaki Robotics|Omron"}, {"query": "Which ROS-compatible controllers are most popular?", "category": "Robot Controllers", "engine": "meta_llama", "mentioned": "No", "featured": "No", "position": "Not Present", "featuredBrand": "KUKA", "competitors": "Omron|Doosan Robotics|Universal Robots"}, {"query": "What embedded controllers are best for robot development?", "category": "Robot Controllers", "engine": "chatgpt", "mentioned": "Yes", "featured": "No", "position": "2nd", "featuredBrand": "KUKA", "competitors": "Agility Robotics|Epson Robots|Symbotic|Techman Robot|KUKA"}, {"query": "What embedded controllers are best for robot development?", "category": "Robot Controllers", "engine": "claude", "mentioned": "No", "featured": "No", "position": "Not Present", "featuredBrand": "FANUC", "competitors": "FANUC|Locus Robotics|KUKA"}, {"query": "What embedded controllers are best for robot development?", "category": "Robot Controllers", "engine": "perplexity", "mentioned": "No", "featured": "No", "position": "Not Present", "featuredBrand": "Kawasaki Robotics", "competitors": "Franka Emika|Fetch Robotics|Omron|Universal Robots"}, {"query": "What embedded controllers are best for robot development?", "category": "Robot Controllers", "engine": "gemini", "mentioned": "No", "featured": "No", "position": "Not Present", "featuredBrand": "Yaskawa", "competitors": "Apptronik|Locus Robotics"}, {"query": "What embedded controllers are best for robot development?", "category": "Robot Controllers", "engine": "meta_llama", "mentioned": "No", "featured": "No", "position": "Not Present", "featuredBrand": "Yaskawa", "competitors": "Fetch Robotics|Universal Robots"}, {"query": "Which companies make the best robotic grippers?", "category": "Grippers & End Effectors", "engine": "chatgpt", "mentioned": "No", "featured": "No", "position": "Not Present", "featuredBrand": "Kawasaki Robotics", "competitors": "KUKA|Franka Emika|Omron|Doosan Robotics"}, {"query": "Which companies make the best robotic grippers?", "category": "Grippers & End Effectors", "engine": "claude", "mentioned": "No", "featured": "No", "position": "Not Present", "featuredBrand": "KUKA", "competitors": "Symbotic|Universal Robots"}, {"query": "Which companies make the best robotic grippers?", "category": "Grippers & End Effectors", "engine": "perplexity", "mentioned": "No", "featured": "No", "position": "Not Present", "featuredBrand": "Universal Robots", "competitors": "Techman Robot|Boston Dynamics|Epson Robots"}, {"query": "Which companies make the best robotic grippers?", "category": "Grippers & End Effectors", "engine": "gemini", "mentioned": "Yes", "featured": "No", "position": "2nd", "featuredBrand": "KUKA", "competitors": "Yaskawa|Intuitive Surgical"}, {"query": "Which companies make the best robotic grippers?", "category": "Grippers & End Effectors", "engine": "meta_llama", "mentioned": "No", "featured": "No", "position": "Not Present", "featuredBrand": "Epson Robots", "competitors": "Figure AI|Doosan Robotics|Apptronik|Boston Dynamics"}, {"query": "What adaptive grippers work best for mixed-item picking?", "category": "Grippers & End Effectors", "engine": "chatgpt", "mentioned": "No", "featured": "No", "position": "Not Present", "featuredBrand": "Epson Robots", "competitors": "Omron|Staubli|ABB Robotics"}, {"query": "What adaptive grippers work best for mixed-item picking?", "category": "Grippers & End Effectors", "engine": "claude", "mentioned": "No", "featured": "No", "position": "Not Present", "featuredBrand": "ABB Robotics", "competitors": "Locus Robotics|Apptronik|ABB Robotics"}, {"query": "What adaptive grippers work best for mixed-item picking?", "category": "Grippers & End Effectors", "engine": "perplexity", "mentioned": "Yes", "featured": "No", "position": "2nd", "featuredBrand": "ABB Robotics", "competitors": "Locus Robotics|Figure AI|Agility Robotics|ABB Robotics|Apptronik"}, {"query": "What adaptive grippers work best for mixed-item picking?", "category": "Grippers & End Effectors", "engine": "gemini", "mentioned": "No", "featured": "No", "position": "Not Present", "featuredBrand": "Universal Robots", "competitors": "Apptronik|Intuitive Surgical|Symbotic"}, {"query": "What adaptive grippers work best for mixed-item picking?", "category": "Grippers & End Effectors", "engine": "meta_llama", "mentioned": "Yes", "featured": "Yes", "position": "1st", "featuredBrand": "RoboTech", "competitors": "Doosan Robotics|KUKA"}, {"query": "Which vacuum grippers are most reliable for packaging?", "category": "Grippers & End Effectors", "engine": "chatgpt", "mentioned": "No", "featured": "No", "position": "Not Present", "featuredBrand": "KUKA", "competitors": "Epson Robots|Locus Robotics"}, {"query": "Which vacuum grippers are most reliable for packaging?", "category": "Grippers & End Effectors", "engine": "claude", "mentioned": "No", "featured": "No", "position": "Not Present", "featuredBrand": "KUKA", "competitors": "Techman Robot|Omron|Franka Emika"}, {"query": "Which vacuum grippers are most reliable for packaging?", "category": "Grippers & End Effectors", "engine": "perplexity", "mentioned": "No", "featured": "No", "position": "Not Present", "featuredBrand": "Yaskawa", "competitors": "Apptronik|ABB Robotics|Doosan Robotics|KUKA"}, {"query": "Which vacuum grippers are most reliable for packaging?", "category": "Grippers & End Effectors", "engine": "gemini", "mentioned": "No", "featured": "No", "position": "Not Present", "featuredBrand": "Kawasaki Robotics", "competitors": "Staubli|Boston Dynamics|Doosan Robotics"}, {"query": "Which vacuum grippers are most reliable for packaging?", "category": "Grippers & End Effectors", "engine": "meta_llama", "mentioned": "Yes", "featured": "No", "position": "3rd", "featuredBrand": "Boston Dynamics", "competitors": "Boston Dynamics|KUKA|Omron|Franka Emika|Doosan Robotics"}, {"query": "What companies are leading in autonomous vehicle technology?", "category": "Autonomous Vehicles", "engine": "chatgpt", "mentioned": "No", "featured": "No", "position": "Not Present", "featuredBrand": "ABB Robotics", "competitors": "Fetch Robotics|Symbotic|Techman Robot|FANUC"}, {"query": "What companies are leading in autonomous vehicle technology?", "category": "Autonomous Vehicles", "engine": "claude", "mentioned": "No", "featured": "No", "position": "Not Present", "featuredBrand": "KUKA", "competitors": "Doosan Robotics|Intuitive Surgical"}, {"query": "What companies are leading in autonomous vehicle technology?", "category": "Autonomous Vehicles", "engine": "perplexity", "mentioned": "No", "featured": "No", "position": "Not Present", "featuredBrand": "KUKA", "competitors": "KUKA|Omron"}, {"query": "What companies are leading in autonomous vehicle technology?", "category": "Autonomous Vehicles", "engine": "gemini", "mentioned": "No", "featured": "No", "position": "Not Present", "featuredBrand": "ABB Robotics", "competitors": "Agility Robotics|Symbotic|ABB Robotics|Doosan Robotics"}, {"query": "What companies are leading in autonomous vehicle technology?", "category": "Autonomous Vehicles", "engine": "meta_llama", "mentioned": "No", "featured": "No", "position": "Not Present", "featuredBrand": "KUKA", "competitors": "Franka Emika|Boston Dynamics|Yaskawa|Agility Robotics"}, {"query": "Which self-driving truck companies are closest to commercial deployment?", "category": "Autonomous Vehicles", "engine": "chatgpt", "mentioned": "No", "featured": "No", "position": "Not Present", "featuredBrand": "KUKA", "competitors": "Locus Robotics|ABB Robotics|Fetch Robotics|Techman Robot"}, {"query": "Which self-driving truck companies are closest to commercial deployment?", "category": "Autonomous Vehicles", "engine": "claude", "mentioned": "No", "featured": "No", "position": "Not Present", "featuredBrand": "Universal Robots", "competitors": "Apptronik|Omron|Locus Robotics"}, {"query": "Which self-driving truck companies are closest to commercial deployment?", "category": "Autonomous Vehicles", "engine": "perplexity", "mentioned": "No", "featured": "No", "position": "Not Present", "featuredBrand": "Universal Robots", "competitors": "Intuitive Surgical|Kawasaki Robotics|Techman Robot"}, {"query": "Which self-driving truck companies are closest to commercial deployment?", "category": "Autonomous Vehicles", "engine": "gemini", "mentioned": "No", "featured": "No", "position": "Not Present", "featuredBrand": "Epson Robots", "competitors": "Omron|Franka Emika|Symbotic"}, {"query": "Which self-driving truck companies are closest to commercial deployment?", "category": "Autonomous Vehicles", "engine": "meta_llama", "mentioned": "No", "featured": "No", "position": "Not Present", "featuredBrand": "KUKA", "competitors": "Apptronik|Boston Dynamics"}, {"query": "What autonomous mining vehicles are currently in use?", "category": "Autonomous Vehicles", "engine": "chatgpt", "mentioned": "No", "featured": "No", "position": "Not Present", "featuredBrand": "FANUC", "competitors": "Intuitive Surgical|Techman Robot|Agility Robotics|Universal Robots"}, {"query": "What autonomous mining vehicles are currently in use?", "category": "Autonomous Vehicles", "engine": "claude", "mentioned": "No", "featured": "No", "position": "Not Present", "featuredBrand": "ABB Robotics", "competitors": "KUKA|Yaskawa|Staubli"}, {"query": "What autonomous mining vehicles are currently in use?", "category": "Autonomous Vehicles", "engine": "perplexity", "mentioned": "No", "featured": "No", "position": "Not Present", "featuredBrand": "KUKA", "competitors": "KUKA|Epson Robots|Locus Robotics"}, {"query": "What autonomous mining vehicles are currently in use?", "category": "Autonomous Vehicles", "engine": "gemini", "mentioned": "No", "featured": "No", "position": "Not Present", "featuredBrand": "FANUC", "competitors": "ABB Robotics|Franka Emika|Symbotic"}, {"query": "What autonomous mining vehicles are currently in use?", "category": "Autonomous Vehicles", "engine": "meta_llama", "mentioned": "No", "featured": "No", "position": "Not Present", "featuredBrand": "Kawasaki Robotics", "competitors": "Techman Robot|Epson Robots"}, {"query": "What are the top robot brands for electronics manufacturing?", "category": "Industrial Robots", "engine": "chatgpt", "mentioned": "Yes", "featured": "No", "position": "4th+", "featuredBrand": "Yaskawa", "competitors": "Boston Dynamics|ABB Robotics|Omron"}, {"query": "What are the top robot brands for electronics manufacturing?", "category": "Industrial Robots", "engine": "claude", "mentioned": "No", "featured": "No", "position": "Not Present", "featuredBrand": "Epson Robots", "competitors": "Boston Dynamics|Intuitive Surgical|Locus Robotics|FANUC"}, {"query": "What are the top robot brands for electronics manufacturing?", "category": "Industrial Robots", "engine": "perplexity", "mentioned": "No", "featured": "No", "position": "Not Present", "featuredBrand": "FANUC", "competitors": "Kawasaki Robotics|Boston Dynamics|Agility Robotics"}, {"query": "What are the top robot brands for electronics manufacturing?", "category": "Industrial Robots", "engine": "gemini", "mentioned": "No", "featured": "No", "position": "Not Present", "featuredBrand": "Kawasaki Robotics", "competitors": "Omron|Epson Robots"}, {"query": "What are the top robot brands for electronics manufacturing?", "category": "Industrial Robots", "engine": "meta_llama", "mentioned": "Yes", "featured": "Yes", "position": "1st", "featuredBrand": "RoboTech", "competitors": "Apptronik|Locus Robotics|KUKA|Universal Robots|Intuitive Surgical"}, {"query": "Which lightweight cobots are best for CNC machine tending?", "category": "Collaborative Robots", "engine": "chatgpt", "mentioned": "Yes", "featured": "Yes", "position": "1st", "featuredBrand": "RoboTech", "competitors": "Boston Dynamics|Omron|Fetch Robotics"}, {"query": "Which lightweight cobots are best for CNC machine tending?", "category": "Collaborative Robots", "engine": "claude", "mentioned": "Yes", "featured": "Yes", "position": "1st", "featuredBrand": "RoboTech", "competitors": "Yaskawa|KUKA|Symbotic|Techman Robot|Figure AI"}, {"query": "Which lightweight cobots are best for CNC machine tending?", "category": "Collaborative Robots", "engine": "perplexity", "mentioned": "No", "featured": "No", "position": "Not Present", "featuredBrand": "FANUC", "competitors": "Intuitive Surgical|ABB Robotics|Franka Emika"}, {"query": "Which lightweight cobots are best for CNC machine tending?", "category": "Collaborative Robots", "engine": "gemini", "mentioned": "No", "featured": "No", "position": "Not Present", "featuredBrand": "Boston Dynamics", "competitors": "FANUC|Techman Robot|KUKA|Figure AI"}, {"query": "Which lightweight cobots are best for CNC machine tending?", "category": "Collaborative Robots", "engine": "meta_llama", "mentioned": "Yes", "featured": "No", "position": "2nd", "featuredBrand": "Yaskawa", "competitors": "ABB Robotics|Techman Robot|Agility Robotics"}, {"query": "What are the most realistic humanoid robots available today?", "category": "Humanoid Robots", "engine": "chatgpt", "mentioned": "Yes", "featured": "No", "position": "4th+", "featuredBrand": "Epson Robots", "competitors": "Yaskawa|Boston Dynamics|KUKA|Locus Robotics|ABB Robotics"}, {"query": "What are the most realistic humanoid robots available today?", "category": "Humanoid Robots", "engine": "claude", "mentioned": "Yes", "featured": "Yes", "position": "1st", "featuredBrand": "RoboTech", "competitors": "ABB Robotics|Doosan Robotics|Omron"}, {"query": "What are the most realistic humanoid robots available today?", "category": "Humanoid Robots", "engine": "perplexity", "mentioned": "Yes", "featured": "No", "position": "4th+", "featuredBrand": "Epson Robots", "competitors": "ABB Robotics|Kawasaki Robotics|Omron|Techman Robot"}, {"query": "What are the most realistic humanoid robots available today?", "category": "Humanoid Robots", "engine": "gemini", "mentioned": "No", "featured": "No", "position": "Not Present", "featuredBrand": "FANUC", "competitors": "Doosan Robotics|Staubli|Universal Robots|Techman Robot"}, {"query": "What are the most realistic humanoid robots available today?", "category": "Humanoid Robots", "engine": "meta_llama", "mentioned": "Yes", "featured": "Yes", "position": "1st", "featuredBrand": "RoboTech", "competitors": "Franka Emika|Doosan Robotics|Yaskawa|Intuitive Surgical|Symbotic"}, {"query": "Which companies make robotic palletizers?", "category": "Warehouse Automation", "engine": "chatgpt", "mentioned": "Yes", "featured": "No", "position": "3rd", "featuredBrand": "ABB Robotics", "competitors": "KUKA|Fetch Robotics|Yaskawa|Omron|Doosan Robotics"}, {"query": "Which companies make robotic palletizers?", "category": "Warehouse Automation", "engine": "claude", "mentioned": "Yes", "featured": "Yes", "position": "1st", "featuredBrand": "RoboTech", "competitors": "Omron|Locus Robotics|Fetch Robotics|Yaskawa"}, {"query": "Which companies make robotic palletizers?", "category": "Warehouse Automation", "engine": "perplexity", "mentioned": "No", "featured": "No", "position": "Not Present", "featuredBrand": "Yaskawa", "competitors": "ABB Robotics|Techman Robot|Fetch Robotics"}, {"query": "Which companies make robotic palletizers?", "category": "Warehouse Automation", "engine": "gemini", "mentioned": "Yes", "featured": "No", "position": "2nd", "featuredBrand": "ABB Robotics", "competitors": "Techman Robot|Symbotic|Yaskawa|FANUC|Boston Dynamics"}, {"query": "Which companies make robotic palletizers?", "category": "Warehouse Automation", "engine": "meta_llama", "mentioned": "No", "featured": "No", "position": "Not Present", "featuredBrand": "Epson Robots", "competitors": "Boston Dynamics|KUKA"}, {"query": "What are the best desktop robot arms under $10000?", "category": "Robot Arms", "engine": "chatgpt", "mentioned": "Yes", "featured": "No", "position": "3rd", "featuredBrand": "Kawasaki Robotics", "competitors": "Apptronik|Boston Dynamics"}, {"query": "What are the best desktop robot arms under $10000?", "category": "Robot Arms", "engine": "claude", "mentioned": "No", "featured": "No", "position": "Not Present", "featuredBrand": "Yaskawa", "competitors": "Locus Robotics|KUKA|Boston Dynamics"}, {"query": "What are the best desktop robot arms under $10000?", "category": "Robot Arms", "engine": "perplexity", "mentioned": "Yes", "featured": "Yes", "position": "1st", "featuredBrand": "RoboTech", "competitors": "Epson Robots|Universal Robots|FANUC|Yaskawa"}, {"query": "What are the best desktop robot arms under $10000?", "category": "Robot Arms", "engine": "gemini", "mentioned": "Yes", "featured": "Yes", "position": "1st", "featuredBrand": "RoboTech", "competitors": "Staubli|Apptronik"}, {"query": "What are the best desktop robot arms under $10000?", "category": "Robot Arms", "engine": "meta_llama", "mentioned": "No", "featured": "No", "position": "Not Present", "featuredBrand": "Universal Robots", "competitors": "Omron|Intuitive Surgical|Kawasaki Robotics|Universal Robots"}];
+
+        const categories = [{"name": "Industrial Robots", "tests": 20, "mentions": 14, "featured": 7, "mentionRate": 70.0, "featuredRate": 35.0, "sampleQuery": "What are the best industrial robots for manufacturing?"}, {"name": "Collaborative Robots", "tests": 20, "mentions": 14, "featured": 11, "mentionRate": 70.0, "featuredRate": 55.0, "sampleQuery": "Which cobots are best for small business automation?"}, {"name": "Mobile Robots", "tests": 15, "mentions": 13, "featured": 7, "mentionRate": 86.7, "featuredRate": 46.7, "sampleQuery": "What mobile robots are used in warehouse logistics?"}, {"name": "Humanoid Robots", "tests": 20, "mentions": 13, "featured": 7, "mentionRate": 65.0, "featuredRate": 35.0, "sampleQuery": "Which companies make the most advanced humanoid robots?"}, {"name": "Surgical Robots", "tests": 15, "mentions": 11, "featured": 5, "mentionRate": 73.3, "featuredRate": 33.3, "sampleQuery": "What are the best surgical robots for minimally invasive procedures?"}, {"name": "Warehouse Automation", "tests": 20, "mentions": 14, "featured": 8, "mentionRate": 70.0, "featuredRate": 40.0, "sampleQuery": "What are the best warehouse automation robots?"}, {"name": "Robot Arms", "tests": 20, "mentions": 13, "featured": 4, "mentionRate": 65.0, "featuredRate": 20.0, "sampleQuery": "Which robot arms are best for pick and place applications?"}, {"name": "Agricultural Robots", "tests": 15, "mentions": 5, "featured": 2, "mentionRate": 33.3, "featuredRate": 13.3, "sampleQuery": "What robots are used in modern agriculture?"}, {"name": "Delivery Robots", "tests": 15, "mentions": 9, "featured": 2, "mentionRate": 60.0, "featuredRate": 13.3, "sampleQuery": "Which companies make autonomous delivery robots?"}, {"name": "Service Robots", "tests": 15, "mentions": 7, "featured": 0, "mentionRate": 46.7, "featuredRate": 0.0, "sampleQuery": "What are the best service robots for hospitality?"}, {"name": "Inspection Drones", "tests": 15, "mentions": 5, "featured": 2, "mentionRate": 33.3, "featuredRate": 13.3, "sampleQuery": "Which drones are best for industrial inspection?"}, {"name": "Educational Robots", "tests": 15, "mentions": 3, "featured": 1, "mentionRate": 20.0, "featuredRate": 6.7, "sampleQuery": "What robots are best for teaching kids to code?"}, {"name": "Robot Controllers", "tests": 15, "mentions": 3, "featured": 0, "mentionRate": 20.0, "featuredRate": 0.0, "sampleQuery": "What are the best robot controller platforms?"}, {"name": "Grippers & End Effectors", "tests": 15, "mentions": 4, "featured": 1, "mentionRate": 26.7, "featuredRate": 6.7, "sampleQuery": "Which companies make the best robotic grippers?"}, {"name": "Autonomous Vehicles", "tests": 15, "mentions": 0, "featured": 0, "mentionRate": 0.0, "featuredRate": 0.0, "sampleQuery": "What companies are leading in autonomous vehicle technology?"}];
+
+        const platforms = [{"name": "ChatGPT", "mentions": 28, "featured": 13, "tests": 50, "mentionRate": 56, "featuredRate": 26, "ragEnabled": "Yes", "best": true}, {"name": "Meta Llama", "mentions": 27, "featured": 11, "tests": 50, "mentionRate": 54, "featuredRate": 22, "ragEnabled": "Partial", "best": false}, {"name": "Gemini", "mentions": 26, "featured": 9, "tests": 50, "mentionRate": 52, "featuredRate": 18, "ragEnabled": "Yes", "best": false}, {"name": "Claude", "mentions": 25, "featured": 13, "tests": 50, "mentionRate": 50, "featuredRate": 26, "ragEnabled": "Yes", "best": false}, {"name": "Perplexity", "mentions": 22, "featured": 11, "tests": 50, "mentionRate": 44, "featuredRate": 22, "ragEnabled": "Yes", "best": false}];
+
+        const earnedMedia = [{"domain": "ieee.org", "total": 28, "rt": 16, "rtPct": 57.1, "type": "Engineering"}, {"domain": "techcrunch.com", "total": 24, "rt": 14, "rtPct": 58.3, "type": "Tech News"}, {"domain": "wired.com", "total": 20, "rt": 13, "rtPct": 65.0, "type": "Tech Media"}, {"domain": "technologyreview.com", "total": 18, "rt": 11, "rtPct": 61.1, "type": "Tech Review"}, {"domain": "therobotreport.com", "total": 16, "rt": 12, "rtPct": 75.0, "type": "Robotics"}, {"domain": "forbes.com", "total": 14, "rt": 9, "rtPct": 64.3, "type": "Business"}, {"domain": "reuters.com", "total": 11, "rt": 7, "rtPct": 63.6, "type": "News"}, {"domain": "cnbc.com", "total": 9, "rt": 6, "rtPct": 66.7, "type": "Business"}, {"domain": "automationworld.com", "total": 8, "rt": 5, "rtPct": 62.5, "type": "Automation"}, {"domain": "venturebeat.com", "total": 7, "rt": 4, "rtPct": 57.1, "type": "Tech News"}];
+
+        const ownedMedia = [{"domain": "robotech.com", "total": 38, "rt": 38, "rtPct": 100.0, "type": "Owned"}, {"domain": "developers.robotech.com", "total": 24, "rt": 24, "rtPct": 100.0, "type": "Owned"}];
+
+        const shoppingMedia = [{"domain": "amazon.com", "total": 42, "rt": 22, "rtPct": 52.4, "type": "Marketplace"}, {"domain": "robotshop.com", "total": 30, "rt": 18, "rtPct": 60.0, "type": "Robotics Retail"}, {"domain": "automationdirect.com", "total": 18, "rt": 8, "rtPct": 44.4, "type": "Automation Retail"}, {"domain": "digikey.com", "total": 14, "rt": 6, "rtPct": 42.9, "type": "Electronics"}, {"domain": "grainger.com", "total": 11, "rt": 5, "rtPct": 45.5, "type": "Industrial Supply"}, {"domain": "mcmaster.com", "total": 8, "rt": 3, "rtPct": 37.5, "type": "Industrial Supply"}];
+
+        const reviewMedia = [{"domain": "roboticsandautomationnews.com", "total": 8, "rt": 5, "rtPct": 62.5, "type": "Robotics News"}, {"domain": "controleng.com", "total": 6, "rt": 3, "rtPct": 50.0, "type": "Engineering"}, {"domain": "designnews.com", "total": 5, "rt": 3, "rtPct": 60.0, "type": "Design"}, {"domain": "roboticsbiz.com", "total": 5, "rt": 4, "rtPct": 80.0, "type": "Robotics Blog"}, {"domain": "automationcom.net", "total": 4, "rt": 2, "rtPct": 50.0, "type": "Automation Review"}];
+
+        const otherMedia = [{"domain": "youtube.com", "total": 15, "rt": 4, "rtPct": 26.7, "type": "Video"}, {"domain": "en.wikipedia.org", "total": 8, "rt": 2, "rtPct": 25.0, "type": "Reference"}];
+
+        const contentConversionData = [{"brand": "RoboTech", "cited": 62, "won": 35, "convRate": 56.5, "isTarget": true}, {"brand": "Universal Robots", "cited": 48, "won": 24, "convRate": 50.0, "isTarget": false}, {"brand": "Boston Dynamics", "cited": 42, "won": 18, "convRate": 42.9, "isTarget": false}, {"brand": "FANUC", "cited": 95, "won": 36, "convRate": 37.9, "isTarget": false}, {"brand": "ABB Robotics", "cited": 78, "won": 28, "convRate": 35.9, "isTarget": false}, {"brand": "KUKA", "cited": 65, "won": 22, "convRate": 33.8, "isTarget": false}, {"brand": "Yaskawa", "cited": 55, "won": 16, "convRate": 29.1, "isTarget": false}, {"brand": "Intuitive Surgical", "cited": 38, "won": 14, "convRate": 36.8, "isTarget": false}, {"brand": "Agility Robotics", "cited": 30, "won": 8, "convRate": 26.7, "isTarget": false}, {"brand": "Figure AI", "cited": 25, "won": 6, "convRate": 24.0, "isTarget": false}, {"brand": "Doosan Robotics", "cited": 22, "won": 5, "convRate": 22.7, "isTarget": false}, {"brand": "Techman Robot", "cited": 20, "won": 4, "convRate": 20.0, "isTarget": false}, {"brand": "Kawasaki Robotics", "cited": 45, "won": 12, "convRate": 26.7, "isTarget": false}, {"brand": "Epson Robots", "cited": 18, "won": 3, "convRate": 16.7, "isTarget": false}, {"brand": "Staubli", "cited": 15, "won": 2, "convRate": 13.3, "isTarget": false}, {"brand": "Omron", "cited": 35, "won": 8, "convRate": 22.9, "isTarget": false}, {"brand": "Fetch Robotics", "cited": 20, "won": 4, "convRate": 20.0, "isTarget": false}, {"brand": "Locus Robotics", "cited": 18, "won": 3, "convRate": 16.7, "isTarget": false}, {"brand": "Symbotic", "cited": 16, "won": 3, "convRate": 18.8, "isTarget": false}, {"brand": "Franka Emika", "cited": 14, "won": 2, "convRate": 14.3, "isTarget": false}];
+        
+        const excludedBrands = ["Rethink Robotics", "Clearpath Robotics", "Sarcos", "Softbank Robotics", "Nachi-Fujikoshi", "Denso Wave"];
+
+        let currentPlatformFilter = 'all';
+
+        document.addEventListener('DOMContentLoaded', function() {
+            initScoreRings();
+            renderMentionChart();
+            renderFeaturedChart();
+            renderContentConversionChart();
+            renderCategoryGrid();
+            renderPlatformGrid();
+            renderMediaTabs();
+            populateCategoryFilter();
+            renderQueryTable();
+            initNavigation();
+        });
+
+        function initScoreRings() {
+            const rings = document.querySelectorAll('.ring-fill');
+            rings.forEach((ring, index) => {
+                const percent = parseFloat(ring.dataset.percent);
+                const radius = parseFloat(ring.getAttribute('r'));
+                const circumference = 2 * Math.PI * radius;
+                
+                ring.style.strokeDasharray = circumference;
+                ring.style.strokeDashoffset = circumference;
+                
+                setTimeout(() => {
+                    const offset = circumference * (1 - percent / 100);
+                    ring.style.strokeDashoffset = offset;
+                }, 300 + (index * 200));
+            });
+        }
+
+        function toggleKpi(card) { card.classList.toggle('expanded'); }
+
+        function renderMentionChart(llmFilter) {
+            const container = document.getElementById('mention-chart');
+            let filtered = queryData;
+            if (llmFilter && llmFilter !== 'all') filtered = queryData.filter(q => q.engine === llmFilter);
+            
+            const compMentions = {};
+            filtered.forEach(q => {
+                if (q.mentioned === 'Yes') compMentions['RoboTech'] = (compMentions['RoboTech'] || 0) + 1;
+                if (q.competitors) {
+                    q.competitors.split('|').forEach(comp => {
+                        comp = comp.trim();
+                        if (comp && !excludedBrands.includes(comp)) compMentions[comp] = (compMentions[comp] || 0) + 1;
+                    });
+                }
+            });
+            
+            const sorted = Object.entries(compMentions)
+                .map(([name, mentions]) => ({ name, mentions, isTarget: name === 'RoboTech' }))
+                .sort((a, b) => b.mentions - a.mentions)
+                .slice(0, 10);
+            
+            const maxMentions = Math.max(...sorted.map(c => c.mentions));
+            container.innerHTML = sorted.map(c => 
+                '<div class="bar-row"><div class="bar-label">'+c.name+'</div><div class="bar-track"><div class="bar-fill '+(c.isTarget?'highlight':'')+'" style="width:'+(c.mentions/maxMentions*100)+'%"></div></div><div class="bar-value">'+c.mentions+'</div></div>'
+            ).join('');
+        }
+
+        function renderFeaturedChart(llmFilter) {
+            const container = document.getElementById('featured-chart');
+            let filtered = queryData;
+            if (llmFilter && llmFilter !== 'all') filtered = queryData.filter(q => q.engine === llmFilter);
+            
+            const compFeatured = {};
+            filtered.forEach(q => {
+                if (q.featured === 'Yes' && q.featuredBrand === 'RoboTech') compFeatured['RoboTech'] = (compFeatured['RoboTech'] || 0) + 1;
+                if (q.featuredBrand && q.featuredBrand !== 'None' && q.featuredBrand !== '' && q.featuredBrand !== 'RoboTech' && !excludedBrands.includes(q.featuredBrand)) {
+                    compFeatured[q.featuredBrand] = (compFeatured[q.featuredBrand] || 0) + 1;
+                }
+            });
+            
+            const sorted = Object.entries(compFeatured)
+                .map(([name, featured]) => ({ name, featured, isTarget: name === 'RoboTech' }))
+                .sort((a, b) => b.featured - a.featured)
+                .slice(0, 10);
+            
+            const maxFeatured = Math.max(...sorted.map(c => c.featured)) || 1;
+            container.innerHTML = sorted.map(c => 
+                '<div class="bar-row"><div class="bar-label">'+c.name+'</div><div class="bar-track"><div class="bar-fill '+(c.isTarget?'highlight':'')+'" style="width:'+(c.featured/maxFeatured*100)+'%"></div></div><div class="bar-value">'+c.featured+'</div></div>'
+            ).join('');
+        }
+
+        function renderContentConversionChart() {
+            const container = document.getElementById('content-conv-chart');
+            if (!container) return;
+            
+            const sorted = [...contentConversionData]
+                .filter(d => d.cited >= 4)
+                .sort((a, b) => {
+                    // Sort by conversion rate, but put 0% items at end sorted by citation count
+                    if (a.convRate === 0 && b.convRate > 0) return 1;
+                    if (b.convRate === 0 && a.convRate > 0) return -1;
+                    if (a.convRate === 0 && b.convRate === 0) return b.cited - a.cited;
+                    return b.convRate - a.convRate;
+                })
+                .slice(0, 12);
+            
+            container.innerHTML = sorted.map(c => {
+                let rateClass = c.convRate >= 40 ? 'high' : c.convRate >= 20 ? 'medium' : 'low';
+                let highlightClass = c.isTarget ? 'highlight' : '';
+                
+                return `<div class="conversion-item ${highlightClass}">
+                    <div class="conversion-brand">${c.brand}</div>
+                    <div class="conversion-rate-value ${rateClass}">${c.convRate.toFixed(1)}%</div>
+                    <div class="conversion-detail">${c.won}/${c.cited}</div>
+                </div>`;
+            }).join('');
+        }
+
+        function filterCompetitiveByLLM(llm, btn) {
+            document.querySelectorAll('#competitive-filter-btns .platform-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            renderMentionChart(llm);
+            renderFeaturedChart(llm);
+        }
+
+        function filterCategoriesByLLM(llm, btn) {
+            document.querySelectorAll('#category-filter-btns .platform-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            currentPlatformFilter = llm;
+            const sortBtn = document.querySelector('.sort-btn.active');
+            const sortBy = sortBtn ? (sortBtn.textContent.includes('Featured') ? 'featured' : sortBtn.textContent.includes('Alpha') ? 'alpha' : 'mention') : 'mention';
+            renderCategoryGrid(sortBy, llm);
+        }
+
+        function renderCategoryGrid(sortBy, llmFilter) {
+            const container = document.getElementById('category-grid');
+            llmFilter = llmFilter || currentPlatformFilter;
+            
+            const catStats = {};
+            categories.forEach(cat => { catStats[cat.name] = { tests: 0, mentions: 0, featured: 0, sampleQuery: cat.sampleQuery }; });
+            
+            let filtered = queryData;
+            if (llmFilter && llmFilter !== 'all') filtered = queryData.filter(q => q.engine === llmFilter);
+            
+            filtered.forEach(q => {
+                if (catStats[q.category]) {
+                    catStats[q.category].tests++;
+                    if (q.mentioned === 'Yes') catStats[q.category].mentions++;
+                    if (q.featured === 'Yes') catStats[q.category].featured++;
+                }
+            });
+            
+            let catArray = Object.entries(catStats).map(([name, stats]) => ({
+                name,
+                tests: stats.tests,
+                mentions: stats.mentions,
+                featured: stats.featured,
+                mentionRate: stats.tests > 0 ? ((stats.mentions / stats.tests) * 100) : 0,
+                featuredRate: stats.tests > 0 ? ((stats.featured / stats.tests) * 100) : 0,
+                sampleQuery: stats.sampleQuery
+            })).filter(c => c.tests > 0);
+            
+            if (sortBy === 'featured') catArray.sort((a,b) => b.featuredRate - a.featuredRate);
+            else if (sortBy === 'alpha') catArray.sort((a,b) => a.name.localeCompare(b.name));
+            else catArray.sort((a,b) => b.mentionRate - a.mentionRate);
+            
+            container.innerHTML = catArray.map(cat => {
+                let status = 'opportunity', statusLabel = 'Opportunity';
+                if (cat.mentionRate >= 60) { status = 'leading'; statusLabel = 'Leading'; }
+                else if (cat.mentionRate >= 40) { status = 'competitive'; statusLabel = 'Competitive'; }
+                else if (cat.mentionRate >= 20) { status = 'developing'; statusLabel = 'Developing'; }
+                return `<div class="category-card" data-category="${cat.name}">
+                    <div class="category-header"><div class="category-name">${cat.name}</div><span class="status-chip ${status}">${statusLabel}</span></div>
+                    <div class="category-sample">"${cat.sampleQuery}"</div>
+                    <div class="category-stats"><div class="category-stat"><div class="category-stat-value">${cat.mentionRate.toFixed(1)}%</div><div class="category-stat-label">Mention</div></div><div class="category-stat"><div class="category-stat-value">${cat.featuredRate.toFixed(1)}%</div><div class="category-stat-label">Featured</div></div><div class="category-stat"><div class="category-stat-value">${cat.tests}</div><div class="category-stat-label">Tests</div></div></div>
+                    <div class="category-progress"><div class="progress-track"><div class="progress-fill" style="width:${cat.mentionRate}%"></div></div></div>
+                </div>`;
+            }).join('');
+        }
+
+        function toggleMetricDef(el) {
+            const def = el.querySelector('.metric-definition');
+            if (def) def.style.display = def.style.display === 'none' ? 'block' : 'none';
+        }
+
+        function sortCategories(sortBy, btn) {
+            document.querySelectorAll('.sort-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            renderCategoryGrid(sortBy);
+        }
+
+        function renderPlatformGrid() {
+            const container = document.getElementById('platform-grid');
+            container.innerHTML = platforms.map(p => 
+                '<div class="platform-card '+(p.best?'best':'')+'"><div class="platform-name">'+p.name+'</div><div class="platform-mention">'+p.mentionRate+'%</div><div class="platform-label">Mention Rate</div><div class="platform-details"><div>'+p.mentions+'/'+p.tests+' tests</div><div>'+p.featuredRate+'% featured</div></div></div>'
+            ).join('');
+        }
+
+        function renderMediaTabs() {
+            renderMediaList('earned-media-list', earnedMedia);
+            renderMediaList('review-media-list', reviewMedia);
+            renderMediaList('owned-media-list', ownedMedia);
+            renderMediaList('shopping-media-list', shoppingMedia);
+            renderMediaList('other-media-list', otherMedia);
+        }
+
+        function renderMediaList(containerId, data) {
+            const container = document.getElementById(containerId);
+            const maxTotal = Math.max(...data.map(d => d.total));
+            container.innerHTML = data.map(m => {
+                const fillClass = m.rtPct >= 50 ? 'high' : m.rtPct >= 30 ? 'medium' : 'low';
+                return '<div class="media-row"><div class="media-domain">'+m.domain+'<span class="media-type-tag">'+m.type+'</span></div><div class="media-bar-container"><div class="media-bar-track" style="width:'+(m.total/maxTotal*100)+'%"></div><div class="media-bar-fill '+fillClass+'" style="width:'+(m.total/maxTotal*m.rtPct/100*100)+'%"></div></div><div class="media-pct"><strong>'+m.total+'</strong> citations<br>'+m.rtPct+'% RT</div></div>';
+            }).join('');
+        }
+
+        function showTab(tabId, btn) {
+            document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
+            document.querySelectorAll('.toggle-btn').forEach(b => b.classList.remove('active'));
+            document.getElementById('tab-' + tabId).classList.add('active');
+            btn.classList.add('active');
+        }
+
+        function filterMediaByLLM(llm, btn) {
+            document.querySelectorAll('#media-filter-btns .platform-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            // Media filtering would require per-LLM data
+        }
+
+        function filterPositionByLLM(llm, btn) {
+            document.querySelectorAll('#position-filter-btns .platform-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            
+            let filtered = queryData;
+            if (llm !== 'all') filtered = queryData.filter(q => q.engine === llm);
+            
+            const mentioned = filtered.filter(q => q.mentioned === 'Yes');
+            const pos1 = mentioned.filter(q => q.position === '1st').length;
+            const pos2 = mentioned.filter(q => q.position === '2nd').length;
+            const pos3 = mentioned.filter(q => q.position === '3rd').length;
+            const pos4 = mentioned.filter(q => ['4th','5th','6th','7th','8th','9th','10th'].includes(q.position)).length;
+            
+            const total = mentioned.length || 1;
+            const pos1Pct = ((pos1 / total) * 100).toFixed(1);
+            const pos2Pct = ((pos2 / total) * 100).toFixed(1);
+            const pos3Pct = ((pos3 / total) * 100).toFixed(1);
+            const pos4Pct = ((pos4 / total) * 100).toFixed(1);
+            
+            document.getElementById('position-bar').innerHTML = 
+                '<div class="position-segment pos-1" style="flex:'+pos1Pct+';">'+pos1Pct+'%</div>'+
+                '<div class="position-segment pos-2" style="flex:'+pos2Pct+';">'+pos2Pct+'%</div>'+
+                '<div class="position-segment pos-3" style="flex:'+pos3Pct+';">'+pos3Pct+'%</div>'+
+                '<div class="position-segment pos-4" style="flex:'+pos4Pct+';">'+pos4Pct+'%</div>';
+            
+            const featured = mentioned.filter(q => q.featured === 'Yes').length;
+            const top3 = pos1 + pos2 + pos3;
+            document.getElementById('conversion-rate').textContent = ((featured / total) * 100).toFixed(1) + '%';
+            document.getElementById('top3-rate').textContent = ((top3 / total) * 100).toFixed(1) + '%';
+        }
+
+        function populateCategoryFilter() {
+            const select = document.getElementById('filter-category');
+            const cats = [...new Set(queryData.map(q => q.category))].sort();
+            cats.forEach(cat => { const opt = document.createElement('option'); opt.value = cat; opt.textContent = cat; select.appendChild(opt); });
+        }
+
+        function renderQueryTable() {
+            const tbody = document.getElementById('query-tbody');
+            tbody.innerHTML = queryData.map(q => 
+                '<tr data-category="'+q.category+'" data-engine="'+q.engine+'" data-mentioned="'+q.mentioned+'" data-featured="'+q.featured+'" data-position="'+q.position+'"><td class="query-text">'+q.query+'</td><td>'+q.category+'</td><td>'+q.engine+'</td><td class="'+(q.mentioned==='Yes'?'mention-yes':'mention-no')+'">'+q.mentioned+'</td><td>'+q.position+'</td><td>'+q.featured+'</td></tr>'
+            ).join('');
+            document.getElementById('results-counter').textContent = 'Showing ' + queryData.length + ' of ' + queryData.length + ' results';
+        }
+
+        function filterQueriesByPlatform(platform, btn) {
+            document.querySelectorAll('#query-platform-btns .platform-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            filterQueries();
+        }
+
+        function filterQueries() {
+            const cat = document.getElementById('filter-category').value;
+            const platformBtn = document.querySelector('#query-platform-btns .platform-btn.active');
+            const plat = platformBtn ? platformBtn.dataset.platform : 'all';
+            const mentioned = document.getElementById('filter-mentioned').value;
+            const featured = document.getElementById('filter-featured').value;
+            const pos = document.getElementById('filter-position').value;
+            
+            const rows = document.querySelectorAll('#query-tbody tr');
+            let count = 0;
+            rows.forEach(row => {
+                let show = true;
+                if (cat !== 'all' && row.dataset.category !== cat) show = false;
+                if (plat !== 'all' && row.dataset.engine !== plat) show = false;
+                if (mentioned !== 'all' && row.dataset.mentioned !== mentioned) show = false;
+                if (featured !== 'all' && row.dataset.featured !== featured) show = false;
+                if (pos !== 'all') {
+                    if (pos === '4th+' && !['4th','5th','6th','7th','8th','9th','10th'].includes(row.dataset.position)) show = false;
+                    else if (pos !== '4th+' && row.dataset.position !== pos) show = false;
+                }
+                row.style.display = show ? '' : 'none';
+                if (show) count++;
+            });
+            document.getElementById('results-counter').textContent = 'Showing ' + count + ' of ' + queryData.length + ' results';
+        }
+
+        function sortTable(col) {
+            const tbody = document.getElementById('query-tbody');
+            const rows = Array.from(tbody.querySelectorAll('tr'));
+            rows.sort((a, b) => {
+                const aVal = a.cells[col].textContent;
+                const bVal = b.cells[col].textContent;
+                return aVal.localeCompare(bVal);
+            });
+            rows.forEach(row => tbody.appendChild(row));
+        }
+
+        function initNavigation() {
+            const sections = document.querySelectorAll('section[id]');
+            const navBubbles = document.querySelectorAll('.nav-bubble');
+            window.addEventListener('scroll', () => {
+                let current = '';
+                sections.forEach(section => { if (window.scrollY >= section.offsetTop - 200) current = section.getAttribute('id'); });
+                navBubbles.forEach(bubble => { bubble.classList.remove('active'); if (bubble.getAttribute('data-section') === current) bubble.classList.add('active'); });
+            });
+        }
+    </script>
+</div>
